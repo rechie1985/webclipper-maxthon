@@ -1,0 +1,85 @@
+{
+	"type" : "extension",
+	"frameworkVersion" : "1.0.6",
+	"guid" : "{33CA60D6-EADC-4558-9185-2EBE14214AB9}",
+	"version" : "1.0.0",
+	"author" : {
+		"name" : "Author Name",
+		"email" : "author@internet.com"
+	},
+
+
+	"title" : {
+		"_t" : "app.title"
+	},
+
+	"description" : {
+		"_t" : "app.description"
+	},
+
+
+	"permissions" : {
+		"httpRequest": [
+			"*.*.*"
+		],
+
+		"notifications": true
+	},
+	"service" : {
+		"main": "service.htm",
+		"debug": true
+	},
+
+
+	"actions" : [{
+		/*
+		脚本类型的行为会在当前页面运行脚本.
+		Webkit 内核下, 脚本类型的行为是在独立的运行环境中执行, 不会污染页面自身的脚本运行环境.
+		IE 内核下, 脚本类型的行为则是和页面自身脚本共享运行环境的.
+		*/
+
+		"type" : "script",
+		"icon" : "box",
+		"title" : { "_t" : "quickbox" },
+
+		"name": "quick-box",
+
+
+		"entryPoints" : [
+			"sidebar",
+			"doc_end"
+		],
+
+		"include:" : [ "*" ],
+		"css" : ["custom.css"],
+		"js": [
+			"jquery.js",
+			"scan.js"
+		],
+		"includeFrames": false
+
+		}, {
+		"type": "panel",
+		"icon" : "panelbox",
+		"title" : { "_t" : "panelbox" },
+		"entryPoints" : [ "sidebar", "toolbar" ],
+		"main" : "panel.htm",
+		"stopOnClose" : false,
+		"allowPin" : true,
+		"resizable" : true,
+		"width" : {
+			"default" : 260,
+			"min" : 120,
+			"max" : 600
+		},
+		"height" : {
+			"default" : 400,
+			"min" : 120,
+			"max" : 1200
+		}
+	}, {
+		"type": "command",
+		"command" : "check_all_tabs"
+	}]
+
+}
