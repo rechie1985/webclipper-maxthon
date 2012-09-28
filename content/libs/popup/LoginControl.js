@@ -31,7 +31,7 @@ function LoginControl() {
 	}
 
 	function login(loginParam) {
-		Wiz.Browser.sendRequest(Wiz.Constant.ListenType.SERVICE, {'param': loginParam});
+		Wiz.Browser.sendRequest(Wiz.Constant.ListenType.SERVICE, {'params': loginParam});
 	}
 
 	function doLogin() {

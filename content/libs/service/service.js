@@ -17,6 +17,7 @@ function onConnectListener(port) {
 	}
 	switch (name) {
 	case 'login':
+		loginAjax(port.params);
 		break;
 	case 'retryClip':
 		break;
@@ -54,10 +55,10 @@ function loginAjax(loginParam) {
 	var loginError = function(err) {
 	}
 	var loginSuccess = function(responseJSON) {
-		Wiz_Context.token = responseJSON.token;
-		var time = 4 * 60 * 1000;
-		setInterval(refreshToken, time);
-		wizRequestPreview();
+		// Wiz_Context.token = responseJSON.token;
+		// var time = 4 * 60 * 1000;
+		// setInterval(refreshToken, time);
+		// wizRequestPreview();
 	}
 	//缓存userid
 	Wiz_Context.user_id = loginParam.user_id;

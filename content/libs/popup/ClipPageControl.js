@@ -7,7 +7,7 @@ var cookieUrl = 'http://service.wiz.cn/web',
 	updateClientUrl = 'http://www.wiz.cn/wiznote_web_clipper_chrome';
 
 function ClipPageControl() {
-	// 'use strict';
+	'use strict';
 	
 	var saveType = localStorage['saveType'],
 		isNative = (saveType && saveType === 'save_to_native') ? true : false,
@@ -112,23 +112,23 @@ function ClipPageControl() {
 	 */
 
 	function changeSubmitTypehandler(evt) {
-		var selectedOption = $('option:selected', '#submit-type'),
-			cmd = selectedOption.attr('id'),
-			portName = ('native' === cmd) ? 'save-native' : 'preview',
-			port = chrome.extension.connect({
-				name: portName
-			});
-		if ('native' === cmd) {
-			if (!checkNativeStatus()) {
-				evt.preventDefault();
-				return ;
-			}
-			noteSubmit();
-		} else {
-			port.postMessage(cmd);
-			//改变页面显示
-			PopupView.changeSubmitDisplayByType();
-		}
+	// 	var selectedOption = $('option:selected', '#submit-type'),
+	// 		cmd = selectedOption.attr('id'),
+	// 		portName = ('native' === cmd) ? 'save-native' : 'preview',
+	// 		port = chrome.extension.connect({
+	// 			name: portName
+	// 		});
+	// 	if ('native' === cmd) {
+	// 		if (!checkNativeStatus()) {
+	// 			evt.preventDefault();
+	// 			return ;
+	// 		}
+	// 		noteSubmit();
+	// 	} else {
+	// 		port.postMessage(cmd);
+	// 		//改变页面显示
+	// 		PopupView.changeSubmitDisplayByType();
+	// 	}
 	}
 
 
@@ -186,9 +186,9 @@ function ClipPageControl() {
 
 	function cmdLogout() {
 		Cookie.removeCookies(cookieUrl, cookieName, function () {
-			chrome.extension.connect({
-				name: 'logout'
-			});
+			// chrome.extension.connect({
+			// 	name: 'logout'
+			// });
 		});
 		window.close();
 	}
@@ -273,16 +273,16 @@ function ClipPageControl() {
 	 */
 
 	function requestCategory() {
-		$('#category_info').bind('click', changeCategoryLoadingStatus);
-		var port = chrome.extension.connect({
-			name: 'requestCategory'
-		});
-		port.onMessage.addListener(function (msg) {
-			//错误处理
-			var value = $('#wiz_note_category').val();
-			localStorage['category'] = msg;
-			parseWizCategory(msg);
-		});
+		// $('#category_info').bind('click', changeCategoryLoadingStatus);
+		// var port = chrome.extension.connect({
+		// 	name: 'requestCategory'
+		// });
+		// port.onMessage.addListener(function (msg) {
+		// 	//错误处理
+		// 	var value = $('#wiz_note_category').val();
+		// 	localStorage['category'] = msg;
+		// 	parseWizCategory(msg);
+		// });
 	}
 
 
@@ -316,9 +316,9 @@ function ClipPageControl() {
 		var info = {
 			direction: opCmd
 		};
-		chrome.extension.connect({
-			name: 'onkeydown'
-		}).postMessage(info);
+		// chrome.extension.connect({
+		// 	name: 'onkeydown'
+		// }).postMessage(info);
 	}
 
 	function getNudgeOp(key, evt) {

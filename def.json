@@ -51,7 +51,7 @@
 		],
 
 		"include:" : [ "*" ],
-		"css" : ["content/style/contentPreview.css"],
+		"css" : [""],
 		"js": [
 			// "content/libs/content/Wiz/Wiz.js", 
 			// "content/libs/content/Wiz/WizConstant.js", 

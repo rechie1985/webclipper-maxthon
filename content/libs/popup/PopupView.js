@@ -1,56 +1,77 @@
-// 'use strict';
+'use strict';
 var PopupView = {
-	changeSubmitDisplayByType : function() 
-	{
+	changeSubmitDisplayByType : function () {
 		var type = $('#submit-type').val();
 		$('#note_submit').html(type);
 	},
-	showCategoryTreeFromLoading : function(animate_time_ms) 
-	{
+	showCategoryTreeFromLoading : function (animate_time_ms) {
 		$('#category_loading').hide();
 		$('#ztree_container').show(animate_time_ms);
 	},
-	showCategoryLoading : function(msg)
-	{
+	showCategoryLoading : function (msg) {
 		$('#category_loading').show();
 		$('#category_loading label').html(msg);
 	},
-	hideCategoryLoading : function()
-	{
+	hideCategoryLoading : function () {
 		$('#category_loading').hide();
 	},
-	showClipFailure : function(msg)
-	{
+	showClipFailure : function (msg) {
 		$('#waiting_div').hide();
 		$('#errorpage_tip label').html(msg);
 		$('#errorpage_tip').show();
 	},
-	showLoginError : function(msg)
-	{
+	showLoginError : function (msg) {
 		$('#wiz_login').show();
 		$('#wiz_clip_detail').hide();
 		$('#div_error_validator').html(msg);
 		$('#waiting').hide();
 	},
-	showWaiting : function(msg)
-	{	
+	showWaiting : function (msg) {	
 		$('#waiting').show();
 		$('#waiting-label').html(msg);
 		$('#wiz_login').hide();
 		$('#wiz_clip_detail').hide();
 	},
-	showLogin : function()
-	{
+	showLogin : function () {
 		$("#waiting").hide();
 		$("#wiz_login").show();
 		$("#wiz_clip_detail").hide();
 	},
-	hideCategoryTreeAfterSelect : function(display, delay_ms)
-	{
+	hideCategoryTreeAfterSelect : function (display, delay_ms) {
 		$("#category_info").html(display);
 		$("#ztree_container").hide(delay_ms);
 	},
-	hideCreateDiv : function() {
+	hideCreateDiv : function () {
 		$('#waiting_div').hide();
+	},
+	initPopupPage : function () {
+		$('#waiting-label').html(Wiz.Message.get('popup_wating'));
+
+		//login page
+		$('#user_id_tip').html(Wiz.Message.get('user_id_tip'));
+		$('#password_tip').html(Wiz.Message.get('password_tip'));
+		$('#keep_password_tip').html(Wiz.Message.get('keep_password_tip'));
+		$('#login_button').html('&nbsp;' + Wiz.Message.get('login_msg') + '&nbsp;');
+
+		//note info page
+		$('#note_title_tip').html(Wiz.Message.get('note_title_tip'));
+		$('#category_tip').html(Wiz.Message.get('category_tip'));
+		// $('#tag_tip').html(Wiz.Message.get('tag_tip'));
+		// $('#tag_input').html(Wiz.Message.get('tag_input'));
+		//submit type
+		$('#article').html(Wiz.Message.get('article_save'));
+		$('#fullPage').html(Wiz.Message.get('fullpage_save'));
+		$('#selection').html(Wiz.Message.get('select_save'));
+		$('#url').html(Wiz.Message.get('url_save'));
+		$('#native').html(Wiz.Message.get('save_more'));
+		//comment area
+		$('#comment_tip').html(Wiz.Message.get('comment_tip'));
+		$('#comment-info').attr('placeholder', Wiz.Message.get('add_comment'));
+
+		$('#save_to_native').html(Wiz.Message.get('save_to_native'));
+		$('#save_to_server').html(Wiz.Message.get('save_to_server'));
+
+		//默认文件夹
+		$('#category_info').html('/' + Wiz.Message.get('MyNotes') + '/').attr('location', '/My Notes/');
 	}
-}
+};
