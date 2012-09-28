@@ -1,4 +1,4 @@
-var Wiz_Constant = {
+var Wiz.Constant = {
 	'use strict';
 	Default = {
 		DOC_CATEGORY: "/My Notes/",
@@ -15,5 +15,10 @@ var Wiz_Constant = {
 		GET_AllCATEGORIES: "category.getAll",
 		GET_ALLTAGS: "tag.getList",
 		DOCUMENT_POSTSIMPLE: "document.postSimpleData"
+	},
+	ListenType = {
+		SERVICE: 'wiz.service',
+		CONTENT: 'wiz.content',
+		POPUP: 'wiz.popup'
 	}
 }

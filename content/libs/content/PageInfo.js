@@ -176,13 +176,13 @@ function Wiz_PageInfo() {
 		return article;
 	}
 
-	function messageHandler(request, sender, sendResponse) {
+	function messageHandler(request) {
 		var handlers = {
 			"getInfo" : getInfoRequestHandler
 		}
 
 		if (request.name && handlers[request.name]) {
-			handlers[request.name](request, sender, sendResponse);
+			handlers[request.name](request);
 		}
 	}
 
@@ -275,7 +275,7 @@ function Wiz_PageInfo() {
 		}
 	}
 
-	function getInfoRequestHandler(request, sender, sendResponse) {
+	function getInfoRequestHandler(request) {
 		// Initialize these values if they haven't been already.
 		findArticle();
 
@@ -294,27 +294,15 @@ function Wiz_PageInfo() {
 			articleBoundingClientRect : articleBoundingClientRect,
 			article : (article != null),
 			recommendationText : getRecommendationText(),
-			documentIsFrameset : documentIsFrameset
+			documentIsFrameset : documentIsFrameset,
+			title  : document.title
 		};
-		sendResponse(response);
+		//send to popup page 
+		Wiz.Browser.sendRequest(Wiz.Constant.ListenType.POPUP, response);
 	}
 
-	// If we can respond to this request, then we're ready. Otherwise, the page hasn't loaded this script yet.
-	// function readyRequestHandler() {
-	// 	console.log('readyRequestHandler');
-	// 	chrome.extension.connect({
-	// 		name : "popup_pageInfoReadyToGo"
-	// 	}).postMessage({url : document.location.href});
-	// }
 
-	Wiz_Browser.onRequest().addListener(messageHandler);
-	// readyRequestHandler();
-
-	// Finally we notify the extension that we're ready to go, in case it's been sitting there waiting for us to load.
-	// We pass it our URL so that it's less likely to get confused and think that we're ready to go when some other page
-	// finishes loading. This is still heuristic, though, as the browser could be loading two separate copies of the same
-	// URL. We'd send our own tab ID, but content scripts don't have access to that API call.
-
+	Wiz.Browser.addListener(Wiz.Constant.ListenType.CONTENT, messageHandler);
 	// Public API:
 	// this.readyRequestHandler = readyRequestHandler
 	this.getDefaultArticle = getDefaultArticle;

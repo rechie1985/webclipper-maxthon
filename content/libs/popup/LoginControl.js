@@ -31,39 +31,11 @@ function LoginControl() {
 	}
 
 	function login(loginParam) {
-		var port = chrome.extension.connect({
-			name : 'login'
-		});
-		port.postMessage(loginParam);
-		port.onMessage.addListener(function(msg) {
-			if (msg == true) {
-				localStorage.clear()
-
-				var value = loginParam.user_id + '*' + loginParam.password;
-				//cookie保存时间  (秒)
-				var expiredays;
-				if (keep_passoword.checked) {
-					expiredays = cookieExpiredays;
-				$('#loginoff_div').hide();
-				}
-				if (!isAutoLogin) {
-					//自动登陆不需要再次设置token
-					Cookie.setCookies(cookieUrl, cookieName, value, expiredays);
-				}
-				localStorage['wiz-clip-auth'] = loginParam.user_id;
-			}
-			//返回错误
-			else {
-				if (msg == false) {
-					msg = chrome.i18n.getMessage('network_wrong');
-				}
-				PopupView.showLoginError(msg);
-			}
-		});
+		Wiz.Browser.sendRequest(Wiz.Constant.ListenType.SERVICE, {'param': loginParam});
 	}
 
 	function doLogin() {
-		var loginingMsg = chrome.i18n.getMessage('logining');
+		var loginingMsg = Wiz.Message.get('logining');
 		PopupView.showWaiting(loginingMsg);
 
 		var loginParam = new Object();
@@ -88,7 +60,7 @@ function LoginControl() {
 		var email = $('#user_id').val();
 		var valid = verifyEmail(email);
 		if (!valid) {
-			$('#userid_error_tip').html(chrome.i18n.getMessage('userid_error')).show(100);
+			$('#userid_error_tip').html(Wiz.Message.get('userid_error')).show(100);
 		}
 		return valid;
 
@@ -105,7 +77,7 @@ function LoginControl() {
 		$('#password_error_tip').hide();
 		var password = $('#password').val();
 		if (password.trim().length < 1) {
-			$('#password_error_tip').html(chrome.i18n.getMessage('password_error')).show(100);
+			$('#password_error_tip').html(Wiz.Message.get('password_error')).show(100);
 			return false;
 		}
 		return true;
@@ -113,7 +85,7 @@ function LoginControl() {
 	}
 
 	function initCreateAccountLink() {
-		$('#create_acount').html(chrome.i18n.getMessage('create_account_link')).bind('click', function(evt) {
+		$('#create_acount').html(Wiz.Message.get('create_account_link')).bind('click', function(evt) {
 			window.open('http://service.wiz.cn/wizkm/a/signup');
 		});
 	}

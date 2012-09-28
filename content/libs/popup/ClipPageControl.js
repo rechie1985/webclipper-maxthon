@@ -72,7 +72,7 @@ function ClipPageControl() {
 	}
 
 	//监听截取信息事件
-	chrome.extension.onConnect.addListener(messageListener);
+	Wiz.Browser.addListener(Wiz.Constant.ListenType.CONTENT, messageListener);
 
 	function messageListener(port) {
 		var name = port.name;
@@ -84,7 +84,7 @@ function ClipPageControl() {
 			}
 			break;
 		case 'PageClipFailure':
-			var pageClipFailure = chrome.i18n.getMessage('pageClipFailure');
+			var pageClipFailure = Wiz.Message.get('pageClipFailure');
 			PopupView.showClipFailure(pageClipFailure);
 			break;
 		}
@@ -161,15 +161,9 @@ function ClipPageControl() {
 	 */
 
 	function requestPageStatus() {
-		chrome.windows.getCurrent(function (win) {
-			chrome.tabs.getSelected(win.id, function (tab) {
-				Wiz_Browser.sendRequest(tab.id, {
-					name: 'getInfo'
-				}, function (params) {
-					initSubmitGroup(params);
-				});
-			});
-		});
+		Wiz.Browser.sendRequest(Wiz.Constant.ListenType.CONTENT, {
+			name: 'getInfo'
+		});	
 	}
 
 	//初始化剪辑页面信息
@@ -178,7 +172,6 @@ function ClipPageControl() {
 	function initClipPageInfo(evt) {
 		initLogoutLink();
 		requestPageStatus();
-		requestTitle();
 		initDefaultCategory();
 		requestToken();
 		requestCategory();
@@ -186,7 +179,7 @@ function ClipPageControl() {
 
 
 	function initLogoutLink() {
-		var logoutText = chrome.i18n.getMessage('logout');
+		var logoutText = Wiz.Message.get('logout');
 		$('#header_user').show();
 		$('#logout_control').html(logoutText).bind('click', cmdLogout);
 	}
@@ -198,22 +191,6 @@ function ClipPageControl() {
 			});
 		});
 		window.close();
-	}
-
-	/**
-	 *加载标题
-	 */
-
-	function requestTitle() {
-		chrome.windows.getCurrent(function (win) {
-			chrome.tabs.getSelected(win.id, function (tab) {
-				var title = tab.title;
-				if (!title) {
-					return;
-				}
-				setTitle(title);
-			});
-		});
 	}
 
 	function setTitle(title) {
@@ -245,7 +222,7 @@ function ClipPageControl() {
 		if (visible) {
 			PopupView.hideCategoryLoading();
 		} else {
-			var categoryLoadingMsg = chrome.i18n.getMessage('category_loading');
+			var categoryLoadingMsg = Wiz.Message.get('category_loading');
 			PopupView.showCategoryLoading(categoryLoadingMsg);
 		}
 	}
@@ -401,17 +378,11 @@ function ClipPageControl() {
 				userid : userid,
 				isNative : isNative
 			};
-		chrome.windows.getCurrent(function (win) {
-			chrome.tabs.getSelected(win.id, function (tab) {
-				Wiz_Browser.sendRequest(tab.id, {
-					name: 'preview',
-					op: 'submit',
-					info: info,
-					type: type
-				}, function (params) {
-					window.close();
-				});
-			});
+		Wiz.Browser.sendRequest(Wiz.Constant.ListenType.CONTENT, {
+			name: 'preview',
+			op: 'submit',
+			info: info,
+			type: type
 		});
 	}
 
@@ -424,7 +395,7 @@ function ClipPageControl() {
 
 	function checkNativeStatus() {
 		if (!hasNativeClient()) {
-			var installNotifyMsg = chrome.i18n.getMessage('install_client_notify');
+			var installNotifyMsg = Wiz.Message.get('install_client_notify');
 			if (window.confirm(installNotifyMsg)) {
 				window.open(updateClientUrl);
 			}

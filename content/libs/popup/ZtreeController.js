@@ -107,19 +107,19 @@ function ZtreeController() {
 }
 
 var specialLocation = {
-	'My Notes' : chrome.i18n.getMessage('MyNotes'),
-	'My Mobiles' : chrome.i18n.getMessage('MyMobiles'),
-	'My Drafts' : chrome.i18n.getMessage('MyDrafts'),
-	'My Journals' : chrome.i18n.getMessage('MyJournals'),
-	'My Events' : chrome.i18n.getMessage('MyEvents'),
-	'My Contacts' : chrome.i18n.getMessage('MyContacts'),
-	'My Tasks' : chrome.i18n.getMessage('MyTasks'),
-	'Deleted Items' : chrome.i18n.getMessage('DeletedItems'),
-	'My Sticky Notes' : chrome.i18n.getMessage('MyStickyNotes'),
-	'Inbox' : chrome.i18n.getMessage('Inbox'),
-	'Completed' : chrome.i18n.getMessage('Completed'),
-	'My Photos' : chrome.i18n.getMessage('MyPhotos'),
-	'My Emails' : chrome.i18n.getMessage('MyEmails')
+	'My Notes' : Wiz.Message.get('MyNotes'),
+	'My Mobiles' : Wiz.Message.get('MyMobiles'),
+	'My Drafts' : Wiz.Message.get('MyDrafts'),
+	'My Journals' : Wiz.Message.get('MyJournals'),
+	'My Events' : Wiz.Message.get('MyEvents'),
+	'My Contacts' : Wiz.Message.get('MyContacts'),
+	'My Tasks' : Wiz.Message.get('MyTasks'),
+	'Deleted Items' : Wiz.Message.get('DeletedItems'),
+	'My Sticky Notes' : Wiz.Message.get('MyStickyNotes'),
+	'Inbox' : Wiz.Message.get('Inbox'),
+	'Completed' : Wiz.Message.get('Completed'),
+	'My Photos' : Wiz.Message.get('MyPhotos'),
+	'My Emails' : Wiz.Message.get('MyEmails')
 }
 
 /**

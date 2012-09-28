@@ -44,13 +44,13 @@ var GlobalUtils = {};
         case "submit":
         case "search":
           if (element.attributes["placeholder"]) {
-            var localizedMessage = chrome.i18n.getMessage(element.attributes["placeholder"].value);
+            var localizedMessage = Wiz.Message.get(element.attributes["placeholder"].value);
             if (localizedMessage) {
               element.placeholder = localizedMessage;
             }
           }
           if (element.attributes["message"]) {
-            var localizedMessage = chrome.i18n.getMessage(element.attributes["message"].value);
+            var localizedMessage = Wiz.Message.get(element.attributes["message"].value);
             if (localizedMessage) {
               element.value = localizedMessage;
             }
@@ -69,14 +69,14 @@ var GlobalUtils = {};
     }
 
     else if (element.attributes["message"]) {
-      var localizedMessage = chrome.i18n.getMessage(element.attributes["message"].value);
+      var localizedMessage = Wiz.Message.get(element.attributes["message"].value);
       if (localizedMessage) {
         element.innerHTML = localizedMessage;
       }
     }
 
     if (element.title){
-      var localizedTitle = chrome.i18n.getMessage(element.title);
+      var localizedTitle = Wiz.Message.get(element.title);
       if (localizedTitle) {
         element.title = localizedTitle;
       }

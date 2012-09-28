@@ -22,7 +22,7 @@ function Wiz_ContentPreview() {
 			var li = document.createElement("li");
 			var div = document.createElement("div");
 			var img = document.createElement("img");
-			var message = document.createTextNode(" " + chrome.i18n.getMessage(nudgeImgs[i][1]));
+			var message = document.createTextNode(" " + Wiz.Message.get(nudgeImgs[i][1]));
 			div.className = "keyIcon";
 			img.src = chrome.extension.getURL("images/nudge-icons/" + nudgeImgs[i][0]);
 			div.appendChild(img);
@@ -615,7 +615,7 @@ function Wiz_ContentPreview() {
 	}
 
 	// This handles incoming requests from other extension pages.
-	function messageHandler(request, sender, sendResponse) {
+	function messageHandler(request) {
 		console.log("Msg Received: " + request.name + " " + request.op);
 		if (!request.name || !request.op || (request.name !== "preview")) {
 			return;
@@ -660,7 +660,6 @@ function Wiz_ContentPreview() {
 			default:
 				console.warn("Received invalid Preview message with 'op=" + request.op + "'.");
 		}
-		sendResponse({});
 	}
 
 	function noteSubmitByType(type, info) {
@@ -716,7 +715,7 @@ function Wiz_ContentPreview() {
 	}
 
 
-	Wiz_Browser.onRequest().addListener(messageHandler);
+	Wiz.Browser.addListener(Wiz.Constant.ListenType.CONTENT, messageHandler);
 
 	// Public API:
 	this.getArticleElement = getArticleElement;

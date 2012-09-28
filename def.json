@@ -42,7 +42,7 @@
 		"icon" : "box",
 		"title" : { "_t" : "quickbox" },
 
-		"name": "quick-box",
+		"name": "content_script",
 
 
 		"entryPoints" : [
@@ -51,10 +51,21 @@
 		],
 
 		"include:" : [ "*" ],
-		"css" : ["custom.css"],
+		"css" : ["content/style/contentPreview.css"],
 		"js": [
-			"jquery.js",
-			"scan.js"
+			// "content/libs/content/Wiz/Wiz.js", 
+			// "content/libs/content/Wiz/WizConstant.js", 
+			// "content/libs/content/Wiz/Maxthon.js", 
+			// "content/libs/content/Wiz/Message.js", 
+			// "content/libs/content/Wiz/Browser.js", 
+			// "content/libs/content/Wiz/Storage.js", 
+			// "content/libs/content/Common/jquery.min.js", 
+			// "content/libs/content/ClientClipper.js", 
+			// "content/libs/content/ContentVeil.js", 
+			// "content/libs/content/Preview.js", 
+			// "content/libs/content/PageInfo.js", 
+			// "content/libs/content/extract-content-all.js", 
+			// "content/libs/content/GlobalUtils.js"
 		],
 		"includeFrames": false
 
@@ -63,17 +74,17 @@
 		"icon" : "panelbox",
 		"title" : { "_t" : "panelbox" },
 		"entryPoints" : [ "sidebar", "toolbar" ],
-		"main" : "panel.htm",
+		"main" : "popup.html",
 		"stopOnClose" : false,
 		"allowPin" : true,
 		"resizable" : true,
 		"width" : {
-			"default" : 260,
+			"default" : 500,
 			"min" : 120,
 			"max" : 600
 		},
 		"height" : {
-			"default" : 400,
+			"default" : 320,
 			"min" : 120,
 			"max" : 1200
 		}
