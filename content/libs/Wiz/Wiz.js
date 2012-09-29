@@ -1,7 +1,7 @@
 if (typeof Wiz === 'undefined') {
 	'use strict';
 	var Wiz = {
-		_maxthon = null
+		_maxthon : null
 	};
 
 	Wiz.getMaxthonAppRt = function () {
@@ -11,3 +11,5 @@ if (typeof Wiz === 'undefined') {
 		return this._maxthon;
 	};
 }
+Wiz.__defineGetter__('maxthon', Wiz.getMaxthonAppRt);
+

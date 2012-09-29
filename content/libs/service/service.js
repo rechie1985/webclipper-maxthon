@@ -11,6 +11,7 @@ var Wiz_Context = {
 }
 
 function onConnectListener(port) {
+	console.log(port);
 	var name = port.name;
 	if (!name) {
 		return;
@@ -41,6 +42,9 @@ function onConnectListener(port) {
 }
 
 function loginByCookies(cookie) {
+	if (!cookie) {
+		return;
+	}
 	var info = cookie;
 	var split_count = info.indexOf('*md5');
 	var loginParam = {};
@@ -299,8 +303,19 @@ function wizSavePageContextMenuClick(info, tab) {
 }
 
 function wiz_background_autoLogin() {
-	Cookie.getCookies(Wiz_Context.cookieUrl, Wiz_Context.cookieName, loginByCookies, true);
+	Cookie.getCookies(Wiz_Context.cookieName, loginByCookies, true);
 }
 
 Wiz.Browser.addListener(Wiz.Constant.ListenType.SERVICE, onConnectListener);
 wiz_background_autoLogin();
+
+//通过监听appEvent来向当前页面和popup发送消息
+Wiz.maxthon.onAppEvent = function (obj) {
+	console.log(obj);
+	var targetType = obj.action.type,
+		actionType = obj.type;
+
+	if ('popup' === targetType) {
+
+	}
+}

@@ -1,6 +1,6 @@
-var Wiz.Constant = {
-	'use strict';
-	Default = {
+'use strict';
+Wiz.Constant = {
+	Default : {
 		DOC_CATEGORY: "/My Notes/",
 		DOC_TITLE: "no title",
 		COOKIE_EXPIRE_SEC: 14 * 24 * 60 * 60,
@@ -8,7 +8,7 @@ var Wiz.Constant = {
 		REFRESH_TOKEN_TIME_MS: 4 * 60 * 1000
 	},
 
-	Api = {
+	Api : {
 		ACCOUNT_LOGIN: "accounts.clientLogin",
 		ACCOUNT_KEEPALIVE: "accounts.keepAlive",
 		ACCOUNT_GETOKEN: "accounts.getToken",
@@ -16,7 +16,7 @@ var Wiz.Constant = {
 		GET_ALLTAGS: "tag.getList",
 		DOCUMENT_POSTSIMPLE: "document.postSimpleData"
 	},
-	ListenType = {
+	ListenType : {
 		SERVICE: 'wiz.service',
 		CONTENT: 'wiz.content',
 		POPUP: 'wiz.popup'

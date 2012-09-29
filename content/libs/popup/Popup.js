@@ -1,23 +1,20 @@
-// 'use strict';
+'use strict';
 var mainUrl = 'http://service.wiz.cn/web';
-window.onload = function() {
+window.onload = function () {
 
 	function showByCookies(cookies) {
 		if (cookies) {
 			Wiz.Browser.sendRequest(Wiz.Constant.ListenType.SERVICE, {'name': 'initRequest'});
 				// clipPageControl.setNativeStatus(msg.hasNative);
-			});
-
 		} else {
 			PopupView.showLogin();
-			
 			// loginControl.initCreateAccountLink();
 		}
 	}
 
 
 	function tabLoadedListener() {
-		Cookie.getCookies(cookieUrl, cookieName, showByCookies);                                                                                                                                                                                                                                                           true);
+		Cookie.getCookies(cookieName, showByCookies);
 	}
 
 	function wizPopupInitialize() {
@@ -36,5 +33,5 @@ window.onload = function() {
 	// });
 
 	wizPopupInitialize();
-}
-console.log(Wiz.maxthon.AppAction);
+	Wiz.Message.get('app.title');
+};

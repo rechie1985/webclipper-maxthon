@@ -1,5 +1,5 @@
 'use strict';
-var Wiz.Browser = {
+Wiz.Browser = {
 	sendRequest : function(type, param) {
 		Wiz.maxthon.post(type, param);
 	},

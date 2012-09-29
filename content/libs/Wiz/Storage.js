@@ -1,5 +1,5 @@
 'use strict';
-var Wiz.Storage = function () {
+Wiz.Storage = function () {
 	this.__defineGetter__('impl', this.getMxImpl);
 };
 

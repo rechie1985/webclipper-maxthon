@@ -1,5 +1,5 @@
 'use strict';
-var Wiz.Maxthon = function () {
+Wiz.Maxthon = function () {
 	var that = window.external.mxGetRuntime();
 	//that.locale、that.storage可以直接调用
 	that.browser = getApiObj(Wiz.Maxthon.BROWSER);
@@ -17,5 +17,3 @@ var Wiz.Maxthon = function () {
 };
 
 Wiz.Maxthon.BROWSER = 'mx.browser'; 
-
-var wiz_maxthon = Wiz.Maxthon.get();

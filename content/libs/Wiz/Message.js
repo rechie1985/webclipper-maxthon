@@ -1,6 +1,7 @@
 'use strict';
-var Wiz.Message = {
+Wiz.Message = {
 	get: function (name) {
-		return wiz.maxthon.locale.t(name);
+		var value = Wiz.maxthon.locale.t(name);
+		return value;
 	}
 }
