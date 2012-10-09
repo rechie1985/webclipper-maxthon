@@ -58,9 +58,9 @@ function Wiz_ContentVeil() {
 			document.documentElement.appendChild(veil);
 		}
 		//显示的时候，切换popup页面显示
-		chrome.extension.connect({
-			name : "contentVeilShow"
-		});
+		// chrome.extension.connect({
+		// 	name : "contentVeilShow"
+		// });
 	}
 
 	function hide() {

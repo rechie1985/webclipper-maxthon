@@ -396,9 +396,9 @@ var ClientClipper = function () {
 			info.params = addExtraParams(info);
 		}
 
-		setTimeout(function(){
-			chrome.extension.connect({"name" : "saveDocument"}).postMessage(info);
-		}, 300);
+		// setTimeout(function(){
+		// 	chrome.extension.connect({"name" : "saveDocument"}).postMessage(info);
+		// }, 300);
 	}
 
 

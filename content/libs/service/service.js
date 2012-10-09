@@ -57,12 +57,10 @@ function loginByCookies(cookie) {
 
 function loginAjax(loginParam) {
 	var loginError = function(err) {
+		Wiz.Browser.sendRequest(Wiz.Constant.ListenType.POPUP, {'name': 'loginError', 'params': err});
 	}
 	var loginSuccess = function(responseJSON) {
-		// Wiz_Context.token = responseJSON.token;
-		// var time = 4 * 60 * 1000;
-		// setInterval(refreshToken, time);
-		// wizRequestPreview();
+		Wiz.Browser.sendRequest(Wiz.Constant.ListenType.POPUP, {'name': 'loginSuccess', 'params': responseJSON});
 	}
 	//缓存userid
 	Wiz_Context.user_id = loginParam.user_id;
@@ -311,11 +309,13 @@ wiz_background_autoLogin();
 
 //通过监听appEvent来向当前页面和popup发送消息
 Wiz.maxthon.onAppEvent = function (obj) {
-	console.log(obj);
+	if (!obj.action) {
+		return;
+	}
 	var targetType = obj.action.type,
 		actionType = obj.type;
-
-	if ('popup' === targetType) {
-
+	console.log(obj);
+	if ('panel' === targetType && 'ACTION_SHOW' === actionType) {
+		console.log(actionType);
 	}
 }

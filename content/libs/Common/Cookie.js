@@ -1,6 +1,7 @@
 
 var Cookie = window.Cookie || {};
 Cookie.setCookies =  function(name, value, expireSecond) {
+    console.log(name + '--' + value + '--' + expireSecond);
     var Days = 30; //此 cookie 将被保存 30 天
     var exp  = new Date();    //new Date("December 31, 9998");
     exp.setTime(exp.getTime() + expireSecond * 1000);
@@ -10,6 +11,7 @@ Cookie.getCookies = function(name, callback, isAutoDelay, params) {
 
     var arr = document.cookie.match(new RegExp("(^| )"+name+"=([^;]*)(;|$)")),
     	cookie = null;
+    console.log(arr);
     if(arr != null) {
     	cookie = unescape(arr[2]);
 	}
