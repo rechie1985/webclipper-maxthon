@@ -7,7 +7,8 @@ var Wiz_Context = {
 	category_expireSec:  10 * 60,
 	token : null,
 	tab : null,
-	user_id : null
+	user_id : null,
+	isLogin: false
 }
 
 function onConnectListener(port) {
@@ -27,8 +28,6 @@ function onConnectListener(port) {
 	case 'saveDocument':
 		break;
 	case 'checkLogin':
-		break;
-	case 'initRequest':
 		break;
 	case 'onkeydown':
 		break;
@@ -65,6 +64,7 @@ function loginAjax(loginParam) {
 	var loginSuccess = function(responseJSON) {
 		Wiz.Browser.sendRequest(Wiz.Constant.ListenType.POPUP, {'name': 'loginSuccess', 'params': responseJSON});
 		wizRequestPreview();
+		Wiz_Context.isLogin = true;
 	}
 	//缓存userid
 	Wiz_Context.user_id = loginParam.user_id;
@@ -211,7 +211,7 @@ function wizRequestPreview(op) {
 		op = 'article';
 	}
 	try {
-		Wiz.Browser.sendRequest(Wiz.Constant.ListenType.SERVICE, {name : 'preview', op : op});
+		Wiz.Browser.sendRequest('content', {name : 'preview', op : op});
 		console.log('service wizRequestPreview start');
 	} catch (err) {
 		console.log('service wizRequestPreview start Error: ' + err);
@@ -294,8 +294,8 @@ Wiz.maxthon.onAppEvent = function (obj) {
 	}
 	var targetType = obj.action.type,
 		actionType = obj.type;
-	console.log(obj);
-	if ('panel' === targetType && 'ACTION_SHOW' === actionType) {
-		console.log(actionType);
+	if ('panel' === targetType && 'ACTION_SHOW' === actionType && Wiz_Context.isLogin) {
+		// Wiz.Browser.sendRequest(Wiz.Constant.ListenType.POPUP, );
+		Wiz.Browser.sendRequest(Wiz.Constant.ListenType.POPUP, {name: 'initClipPage'});
 	}
 }

@@ -6,9 +6,10 @@ window.onload = function () {
 		loginControl = new LoginControl(),
 		handlers = {
 			'loginError': loginErrorHandler,
-			'loginSuccess': clipPageControl.showClipPage,//loginSuccessHandler,
+			'loginSuccess': loginSuccessHandler,
 			'contentVeilShow': clipPageControl.showClipPage,
-			'PageClipFailure': showPageClipFailure
+			'PageClipFailure': showPageClipFailure,
+			'initClipPage': clipPageControl.showClipPage
 		};
 
 	function showPageClipFailure() {
@@ -24,24 +25,28 @@ window.onload = function () {
 		if (keep_passoword.checked) {
 			$('#loginoff_div').hide();
 			var value = $('#user_id').val() + '*' + $('#password').val();
+			localStorage[Wiz.Constant.AUTH_COOKIE] = JSON.stringify({'auth': value, 'date': new Date()});
 		}
-		console.log('Popup loginSuccessHandler sendRequest');
 	}
 
 	function showByCookies(cookies) {
 
 		if (cookies) {
-			Wiz.Browser.sendRequest(Wiz.Constant.ListenType.SERVICE, {'name': 'initRequest'});
-				// clipPageControl.setNativeStatus(msg.hasNative);
+			// Wiz.Browser.sendRequest(Wiz.Constant.ListenType.SERVICE, {'name': 'initRequest'});
+				// clipPageControl.setNativeStatus(msg.hasNative);\
+			//如果cookie有值，则直接显示剪辑页面
+			clipPageControl.showClipPage();
 		} else {
 			PopupView.showLogin();
-			// loginControl.initCreateAccountLink();
 		}
 	}
 
 
 	function tabLoadedListener() {
-		Cookie.getCookies(Wiz.Constant.Default.AUTH_COOKIE, showByCookies);
+		var a = localStorage[Wiz.Constant.AUTH_COOKIE];
+		
+
+		showByCookies(a.auth);
 	}
 
 	function wizPopupInitialize() {

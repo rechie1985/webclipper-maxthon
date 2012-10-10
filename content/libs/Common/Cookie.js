@@ -5,7 +5,10 @@ Cookie.setCookies =  function(name, value, expireSecond) {
     var Days = 30; //此 cookie 将被保存 30 天
     var exp  = new Date();    //new Date("December 31, 9998");
     exp.setTime(exp.getTime() + expireSecond * 1000);
-    document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString();
+    var cookieValue = name + "="+ window.escape (value) + "; max-age=" + expireSecond * 1000;
+    console.log(cookieValue);
+    document.cookie = cookieValue;
+    console.log(document.cookie);
 };
 Cookie.getCookies = function(name, callback, isAutoDelay, params) {
 
@@ -24,5 +27,5 @@ Cookie.removeCookies = function(name, callback) {
     var exp = new Date();
     exp.setTime(exp.getTime() - 1);
     var cval = Cookie.getCookies(name);
-    if(cval!=null) document.cookie= name + "="+cval+";expires="+exp.toGMTString();
+    if(cval!=null) document.cookie= name + "="+cval+";max-age=0";
 };
