@@ -71,13 +71,11 @@ function ClipPageControl() {
 		}, 500);
 	}
 
-	function showClipPage() {
+	function showClipPage(params) {
 		console.log('ClipPageControl.showClipPage()');
 		$('#waiting').hide();
-		// if ($('#wiz_clip_detail').is(':hidden')) {
-			initClipPageListener();
-		// }
-		// Cookie.setCookies(Wiz.Constant.Default.AUTH_COOKIE, 'value', Wiz.Constant.Default.TOKEN_EXPIRE_SEC);
+		initClipPageListener();
+		setNativeStatus(params.hasNative);
 	}
 
 	/**
@@ -120,9 +118,8 @@ function ClipPageControl() {
 
 
 	function initSubmitGroup(clipPageResponse) {
-		console.log(clipPageResponse.info);
-		var clipArticle = clipPageResponse.article,
-			clipSelection = clipPageResponse.selection;
+		var clipArticle = clipPageResponse.info.article,
+			clipSelection = clipPageResponse.info.selection;
 		if (clipSelection == true) {
 			$('#submit-type')[0].options[1].selected = true;
 		} else if (clipArticle == true) {
@@ -390,10 +387,8 @@ function ClipPageControl() {
 
 	function setNativeStatus(hasNative) {
 		_hasNative = hasNative;
-		console.log(hasNative);
 	}
 
-	this.setNativeStatus = setNativeStatus;
 	this.showClipPage = showClipPage;
 	this.initSubmitGroup = initSubmitGroup;
 }

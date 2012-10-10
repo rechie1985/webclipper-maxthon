@@ -28,13 +28,12 @@ window.onload = function () {
 			var value = $('#user_id').val() + '*' + $('#password').val();
 			localStorage[Wiz.Constant.AUTH_COOKIE] = JSON.stringify({'auth': value, 'date': new Date()});
 		}
+		clipPageControl.showClipPage(response);
 	}
 
 	function showByCookies(cookies) {
 
 		if (cookies) {
-			// Wiz.Browser.sendRequest(Wiz.Constant.ListenType.SERVICE, {'name': 'initRequest'});
-				// clipPageControl.setNativeStatus(msg.hasNative);\
 			//如果cookie有值，则直接显示剪辑页面
 			clipPageControl.showClipPage();
 		} else {

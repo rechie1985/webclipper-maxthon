@@ -57,7 +57,7 @@ function loginAjax(loginParam) {
 		Wiz.Browser.sendRequest(Wiz.Constant.ListenType.POPUP, {'name': 'loginError', 'params': err});
 	}
 	var loginSuccess = function(responseJSON) {
-		Wiz.Browser.sendRequest(Wiz.Constant.ListenType.POPUP, {'name': 'loginSuccess', 'params': responseJSON});
+		Wiz.Browser.sendRequest(Wiz.Constant.ListenType.POPUP, {'name': 'loginSuccess', 'params': responseJSON, 'hasNative': hasNativeClient()});
 		wizRequestPreview();
 		Wiz_Context.isLogin = true;
 	}
@@ -291,6 +291,6 @@ Wiz.maxthon.onAppEvent = function (obj) {
 		actionType = obj.type;
 	if ('panel' === targetType && 'ACTION_SHOW' === actionType && Wiz_Context.isLogin) {
 		wizRequestPreview();
-		Wiz.Browser.sendRequest(Wiz.Constant.ListenType.POPUP, {name: 'initClipPage'});
+		Wiz.Browser.sendRequest(Wiz.Constant.ListenType.POPUP, {name: 'initClipPage', hasNative: hasNativeClient()});
 	}
 }

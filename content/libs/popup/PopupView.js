@@ -63,7 +63,6 @@ var PopupView = {
 		$('#fullPage').html(Wiz.Message.get('fullpage_save'));
 		$('#selection').html(Wiz.Message.get('select_save'));
 		$('#url').html(Wiz.Message.get('url_save'));
-		$('#native').html(Wiz.Message.get('save_more'));
 		//comment area
 		$('#comment_tip').html(Wiz.Message.get('comment_tip'));
 		$('#comment-info').attr('placeholder', Wiz.Message.get('add_comment'));

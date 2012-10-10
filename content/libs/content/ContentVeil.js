@@ -57,8 +57,6 @@ function Wiz_ContentVeil() {
 		if (!veil.parentNode) {
 			document.documentElement.appendChild(veil);
 		}
-		//显示的时候，切换popup页面显示
-		Wiz.Browser.sendRequest(Wiz.Constant.ListenType.POPUP, {name : "contentVeilShow"});
 	}
 
 	function hide() {

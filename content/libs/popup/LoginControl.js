@@ -81,7 +81,6 @@ function LoginControl() {
 			return false;
 		}
 		return true;
-
 	}
 
 	function initCreateAccountLink() {
