@@ -72,21 +72,29 @@ function ClipPageControl() {
 	}
 
 	//监听截取信息事件
-	Wiz.Browser.addListener(Wiz.Constant.ListenType.CONTENT, messageListener);
+	// Wiz.Browser.addListener(Wiz.Constant.ListenType.POPUP, messageListener);
 
-	function messageListener(port) {
-		var name = port.name;
-		switch (name) {
-		case 'contentVeilShow':
-			$('#waiting').hide();
-			if ($('#wiz_clip_detail').is(':hidden')) {
-				initClipPageListener();
-			}
-			break;
-		case 'PageClipFailure':
-			var pageClipFailure = Wiz.Message.get('pageClipFailure');
-			PopupView.showClipFailure(pageClipFailure);
-			break;
+	// function messageListener(port) {
+	// 	var name = port.name;
+	// 	switch (name) {
+	// 	case 'contentVeilShow':
+	// 		$('#waiting').hide();
+	// 		if ($('#wiz_clip_detail').is(':hidden')) {
+	// 			initClipPageListener();
+	// 		}
+	// 		break;
+	// 	case 'PageClipFailure':
+	// 		var pageClipFailure = Wiz.Message.get('pageClipFailure');
+	// 		PopupView.showClipFailure(pageClipFailure);
+	// 		break;
+	// 	}
+	// }
+
+	function showClipPage() {
+		console.log('ClipPageControl.showClipPage()');
+		$('#waiting').hide();
+		if ($('#wiz_clip_detail').is(':hidden')) {
+			initClipPageListener();
 		}
 	}
 
@@ -287,12 +295,12 @@ function ClipPageControl() {
 
 
 	function requestToken() {
-		var port = chrome.extension.connect({
-			name: 'requestToken'
-		});
-		port.onMessage.addListener(function (token) {
-			initUserLink(token);
-		});
+		// var port = chrome.extension.connect({
+		// 	name: 'requestToken'
+		// });
+		// port.onMessage.addListener(function (token) {
+		// 	initUserLink(token);
+		// });
 	}
 
 
@@ -412,4 +420,5 @@ function ClipPageControl() {
 	}
 
 	this.setNativeStatus = setNativeStatus;
+	this.showClipPage = showClipPage;
 }

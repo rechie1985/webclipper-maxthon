@@ -38,6 +38,9 @@ function onConnectListener(port) {
 		break;
 	case 'logout':
 		break;
+	case 'pageContentReady':
+		console.log(port);
+		break;
  	}
 }
 
@@ -61,6 +64,7 @@ function loginAjax(loginParam) {
 	}
 	var loginSuccess = function(responseJSON) {
 		Wiz.Browser.sendRequest(Wiz.Constant.ListenType.POPUP, {'name': 'loginSuccess', 'params': responseJSON});
+		wizRequestPreview();
 	}
 	//缓存userid
 	Wiz_Context.user_id = loginParam.user_id;
@@ -206,20 +210,22 @@ function wizRequestPreview(op) {
 		//默认为文章
 		op = 'article';
 	}
-	Wiz.Browser.sendRequest(Wiz.Constant.ListenType.CONTENT, {
-		name : 'preview',
-		op : op
-	});
+	try {
+		Wiz.Browser.sendRequest(Wiz.Constant.ListenType.SERVICE, {name : 'preview', op : op});
+		console.log('service wizRequestPreview start');
+	} catch (err) {
+		console.log('service wizRequestPreview start Error: ' + err);
+	}
 }
 
 var authenticationErrorMsg = Wiz.Message.get('AuthenticationFailure');
 function isLogin() {
-	if (Wiz_Context.token === null) {
-		alert(authenticationErrorMsg);
-		return false;
-	} else {
+	// if (Wiz_Context.token === null) {
+	// 	alert(authenticationErrorMsg);
+	// 	return false;
+	// } else {
 		return true;
-	}
+	// }
 }
 
 /**
@@ -255,27 +261,6 @@ function saveToNative(info) {
 	console.log('Saved To Native Client');
 }
 
-
-/**
- *延长token时间
- */
-function refreshToken() {
-	var params = {
-		client_type : 'web3',
-		api_version : 3,
-		token : Wiz_Context.token
-	};
-	var callbackSuccess = function(responseJSON) {
-	};
-	var callbackError = function(response) {
-		//刷新时失败时，需要自动重新登陆
-		console.log('refresh token error: ' + response);
-		wiz_background_autoLogin();
-	};
-	console.log('refresh token start')
-	xmlrpc(Wiz_Context.xmlUrl, 'accounts.keepAlive', [params], callbackSuccess, callbackError);
-}
-
 function wizSaveNativeContextMenuClick(info, tab) {
 	Wiz_Context.tab = tab;
 	var wizClient = this.getNativeClient();
@@ -300,12 +285,7 @@ function wizSavePageContextMenuClick(info, tab) {
 	}
 }
 
-function wiz_background_autoLogin() {
-	Cookie.getCookies(Wiz_Context.cookieName, loginByCookies, true);
-}
-
 Wiz.Browser.addListener(Wiz.Constant.ListenType.SERVICE, onConnectListener);
-wiz_background_autoLogin();
 
 //通过监听appEvent来向当前页面和popup发送消息
 Wiz.maxthon.onAppEvent = function (obj) {

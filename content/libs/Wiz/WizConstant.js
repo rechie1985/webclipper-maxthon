@@ -18,8 +18,8 @@ Wiz.Constant = {
 		DOCUMENT_POSTSIMPLE: 'document.postSimpleData'
 	},
 	ListenType : {
-		SERVICE: 'wiz.service',
-		CONTENT: 'wiz.content',
-		POPUP: 'wiz.popup'
+		SERVICE: 'wiz_service',
+		CONTENT: 'wiz_content',
+		POPUP: 'wiz_popup'
 	}
 }

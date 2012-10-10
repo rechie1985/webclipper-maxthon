@@ -1,11 +1,20 @@
 'use strict';
 window.onload = function () {
 
-	var handlers = {
-		'loginError': loginErrorHandler,
-		'loginSuccess': loginSuccessHandler
-	},
-		isAutoLogin = false;
+
+	var clipPageControl = new ClipPageControl(),
+		loginControl = new LoginControl(),
+		handlers = {
+			'loginError': loginErrorHandler,
+			'loginSuccess': clipPageControl.showClipPage,//loginSuccessHandler,
+			'contentVeilShow': clipPageControl.showClipPage,
+			'PageClipFailure': showPageClipFailure
+		};
+
+	function showPageClipFailure() {
+		var pageClipFailure = Wiz.Message.get('pageClipFailure');
+		PopupView.showClipFailure(pageClipFailure);
+	}
 
 	function loginErrorHandler(err) {
 		PopupView.showLoginError(err.params);
@@ -16,10 +25,7 @@ window.onload = function () {
 			$('#loginoff_div').hide();
 			var value = $('#user_id').val() + '*' + $('#password').val();
 		}
-		if (!isAutoLogin) {
-			//自动登陆不需要再次设置token
-			Cookie.setCookies(Wiz.Constant.Default.AUTH_COOKIE, value, Wiz.Constant.Default.TOKEN_EXPIRE_SEC);
-		}
+		console.log('Popup loginSuccessHandler sendRequest');
 	}
 
 	function showByCookies(cookies) {
@@ -53,8 +59,6 @@ window.onload = function () {
 	
 
 	PopupView.initPopupPage();
-	// var clipPageControl = new ClipPageControl();
-	var loginControl = new LoginControl();
 	
 	//保证popup页面和preview页面同时关闭
 	// chrome.extension.connect({

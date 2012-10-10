@@ -11,7 +11,6 @@ Cookie.getCookies = function(name, callback, isAutoDelay, params) {
 
     var arr = document.cookie.match(new RegExp("(^| )"+name+"=([^;]*)(;|$)")),
     	cookie = null;
-    console.log(arr);
     if(arr != null) {
     	cookie = unescape(arr[2]);
 	}
