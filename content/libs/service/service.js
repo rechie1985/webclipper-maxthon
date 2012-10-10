@@ -31,14 +31,9 @@ function onConnectListener(port) {
 		break;
 	case 'onkeydown':
 		break;
-	case 'preview':
-		break;
 	case 'requestToken':
 		break;
 	case 'logout':
-		break;
-	case 'pageContentReady':
-		console.log(port);
 		break;
  	}
 }
@@ -211,7 +206,7 @@ function wizRequestPreview(op) {
 		op = 'article';
 	}
 	try {
-		Wiz.Browser.sendRequest('content', {name : 'preview', op : op});
+		Wiz.Browser.sendRequest(Wiz.Constant.ListenType.SERVICE, {name : 'preview', op : op});
 		console.log('service wizRequestPreview start');
 	} catch (err) {
 		console.log('service wizRequestPreview start Error: ' + err);
@@ -295,7 +290,7 @@ Wiz.maxthon.onAppEvent = function (obj) {
 	var targetType = obj.action.type,
 		actionType = obj.type;
 	if ('panel' === targetType && 'ACTION_SHOW' === actionType && Wiz_Context.isLogin) {
-		// Wiz.Browser.sendRequest(Wiz.Constant.ListenType.POPUP, );
+		wizRequestPreview();
 		Wiz.Browser.sendRequest(Wiz.Constant.ListenType.POPUP, {name: 'initClipPage'});
 	}
 }

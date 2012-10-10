@@ -275,7 +275,7 @@ function Wiz_PageInfo() {
 		}
 	}
 
-	function getInfoRequestHandler(request) {
+	function getInfoRequestHandler() {
 		// Initialize these values if they haven't been already.
 		findArticle();
 
@@ -298,16 +298,17 @@ function Wiz_PageInfo() {
 			title  : document.title
 		};
 		//send to popup page 
-		Wiz.Browser.sendRequest(Wiz.Constant.ListenType.POPUP, response);
+		Wiz.Browser.sendRequest(Wiz.Constant.ListenType.POPUP, {name: 'responsePageInfo', info: response});
 	}
 
-
-	Wiz.Browser.addListener(Wiz.Constant.ListenType.CONTENT, messageHandler);
+	//监听popup页面发送来的请求，把当前页面的剪辑信息发送给popup
+	// Wiz.Browser.addListener(Wiz.Constant.ListenType.SERVICE, messageHandler);
 	// Public API:
 	// this.readyRequestHandler = readyRequestHandler
 	this.getDefaultArticle = getDefaultArticle;
 	this.getSelection = getSelection;
 	this.getSelectionFrame = getSelectionFrame;
+	this.getInfoRequestHandler = getInfoRequestHandler;
 
 	Object.preventExtensions(this);
 }

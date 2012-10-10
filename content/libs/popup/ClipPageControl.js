@@ -120,6 +120,7 @@ function ClipPageControl() {
 
 
 	function initSubmitGroup(clipPageResponse) {
+		console.log(clipPageResponse.info);
 		var clipArticle = clipPageResponse.article,
 			clipSelection = clipPageResponse.selection;
 		if (clipSelection == true) {
@@ -148,9 +149,7 @@ function ClipPageControl() {
 	 */
 
 	function requestPageStatus() {
-		Wiz.Browser.sendRequest(Wiz.Constant.ListenType.CONTENT, {
-			name: 'getInfo'
-		});	
+		Wiz.Browser.sendRequest(Wiz.Constant.ListenType.SERVICE, {name: 'preview', op: 'getInfo'});	
 	}
 
 	//初始化剪辑页面信息
@@ -360,7 +359,7 @@ function ClipPageControl() {
 				userid : userid,
 				isNative : isNative
 			};
-		Wiz.Browser.sendRequest(Wiz.Constant.ListenType.CONTENT, {
+		Wiz.Browser.sendRequest(Wiz.Constant.ListenType.SERVICE, {
 			name: 'preview',
 			op: 'submit',
 			info: info,
@@ -396,4 +395,5 @@ function ClipPageControl() {
 
 	this.setNativeStatus = setNativeStatus;
 	this.showClipPage = showClipPage;
+	this.initSubmitGroup = initSubmitGroup;
 }

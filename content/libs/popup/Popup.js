@@ -9,7 +9,8 @@ window.onload = function () {
 			'loginSuccess': loginSuccessHandler,
 			'contentVeilShow': clipPageControl.showClipPage,
 			'PageClipFailure': showPageClipFailure,
-			'initClipPage': clipPageControl.showClipPage
+			'initClipPage': clipPageControl.showClipPage,
+			'responsePageInfo': clipPageControl.initSubmitGroup
 		};
 
 	function showPageClipFailure() {

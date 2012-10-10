@@ -657,6 +657,8 @@ function Wiz_ContentPreview() {
 			case "submit" :
 				noteSubmitByType(request.type, request.info);
 				break;
+			case "getInfo":
+				wiz_pageInfo.getInfoRequestHandler();
 			default:
 				console.warn("Received invalid Preview message with 'op=" + request.op + "'.");
 		}
@@ -715,7 +717,7 @@ function Wiz_ContentPreview() {
 	}
 
 
-	Wiz.Browser.addListener('content', messageHandler);
+	Wiz.Browser.addListener(Wiz.Constant.ListenType.SERVICE, messageHandler);
 
 	// Public API:
 	this.getArticleElement = getArticleElement;
