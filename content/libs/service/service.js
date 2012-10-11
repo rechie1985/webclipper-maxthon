@@ -5,15 +5,15 @@ var Wiz_Context = {
 	cookie_category: 'wiz-all-category',
 	cookie_category_time: 'wiz-category-stored-time',
 	category_expireSec:  10 * 60,
-	token : null,
+	token : "",
 	tab : null,
 	user_id : null,
 	isLogin: false
 }
 
 function onConnectListener(port) {
-	console.log(port);
-	var name = port.name;
+	var name = port.name,
+		info = port.info;
 	if (!name) {
 		return;
 	}
@@ -26,6 +26,21 @@ function onConnectListener(port) {
 	case 'requestCategory':
 		break;
 	case 'saveDocument':
+		if (!info ) {
+			return;
+		}
+		console.log(info);
+		if (info.isNative === true) {
+			//调用本地客户单保存，不需要进行登陆
+			saveToNative(info);
+		} else {
+			if ( !info.title|| !info.params) {
+				return;
+			}
+			//登陆成功后保存
+			saveToServer(info);
+			// wizPostDocument(info);
+		}
 		break;
 	case 'checkLogin':
 		break;
@@ -254,6 +269,10 @@ function saveToNative(info) {
 		console.warn('background saveToNative Error : ' + err);
 	}
 	console.log('Saved To Native Client');
+}
+
+function saveToServer(info) {
+	Cookie.getCookies(Wiz_Context.cookieUrl, Wiz_Context.cookieName, wiz_loginByCookies, true, info);
 }
 
 function wizSaveNativeContextMenuClick(info, tab) {

@@ -11,7 +11,8 @@ function ClipPageControl() {
 	
 	var saveType = localStorage['saveType'],
 		isNative = (saveType && saveType === 'save_to_native') ? true : false,
-		_hasNative = null;
+		_hasNative = null,
+		isOpened = false;
 
 	function initClipPageListener() {
 		PopupView.hideCreateDiv();
@@ -74,7 +75,13 @@ function ClipPageControl() {
 	function showClipPage(params) {
 		console.log('ClipPageControl.showClipPage()');
 		$('#waiting').hide();
-		initClipPageListener();
+		console.log(isOpened);
+		if (isOpened === false) {
+			initClipPageListener();
+			isOpened = true;
+		} else {
+			initClipPageInfo();
+		}
 		setNativeStatus(params.hasNative);
 	}
 

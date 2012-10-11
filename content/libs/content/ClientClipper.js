@@ -396,6 +396,7 @@ var ClientClipper = function () {
 			info.params = addExtraParams(info);
 		}
 
+		Wiz.Browser.sendRequest(Wiz.Constant.ListenType.SERVICE, {'name': 'saveDocument', 'info': info});
 		// setTimeout(function(){
 		// 	chrome.extension.connect({"name" : "saveDocument"}).postMessage(info);
 		// }, 300);
