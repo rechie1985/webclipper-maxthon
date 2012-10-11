@@ -616,6 +616,10 @@ function Wiz_ContentPreview() {
 
 	// This handles incoming requests from other extension pages.
 	function messageHandler(request) {
+		console.log(document.URL);
+		if (document.URL !== Wiz.maxthon.browser.tabs.getCurrentTab().url) {
+			return ;
+		}
 		console.log("Msg Received: " + request.name + " " + request.op);
 		if (!request.name || !request.op || (request.name !== "preview")) {
 			return;
@@ -717,7 +721,7 @@ function Wiz_ContentPreview() {
 	}
 
 
-	Wiz.Browser.addListener(Wiz.Constant.ListenType.SERVICE, messageHandler);
+	Wiz.Browser.addListener(iz.Constant.ListenType.CONTENT, messageHandler);
 
 	// Public API:
 	this.getArticleElement = getArticleElement;
@@ -726,4 +730,5 @@ function Wiz_ContentPreview() {
 
 	Object.preventExtensions(this);
 }
-	var wiz_contentPreview = new Wiz_ContentPreview();
+var wiz_contentPreview = new Wiz_ContentPreview();
+

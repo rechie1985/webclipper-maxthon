@@ -12,6 +12,7 @@ var Wiz_Context = {
 }
 
 function onConnectListener(port) {
+	console.log(port);
 	var name = port.name,
 		info = port.info;
 	if (!name) {
@@ -26,10 +27,12 @@ function onConnectListener(port) {
 	case 'requestCategory':
 		break;
 	case 'saveDocument':
+		var detail = Wiz.storage.get('document_detail');
+		console.log(typeof detail);
+		console.log(JSON.parse(detail));
 		if (!info ) {
 			return;
 		}
-		console.log(info);
 		if (info.isNative === true) {
 			//调用本地客户单保存，不需要进行登陆
 			saveToNative(info);
@@ -221,7 +224,7 @@ function wizRequestPreview(op) {
 		op = 'article';
 	}
 	try {
-		Wiz.Browser.sendRequest(Wiz.Constant.ListenType.SERVICE, {name : 'preview', op : op});
+		Wiz.Browser.sendRequest(Wiz.Constant.ListenType.CONTENT, {name : 'preview', op : op});
 		console.log('service wizRequestPreview start');
 	} catch (err) {
 		console.log('service wizRequestPreview start Error: ' + err);

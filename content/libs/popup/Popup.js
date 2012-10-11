@@ -10,8 +10,14 @@ window.onload = function () {
 			'contentVeilShow': clipPageControl.showClipPage,
 			'PageClipFailure': showPageClipFailure,
 			'initClipPage': clipPageControl.showClipPage,
-			'responsePageInfo': clipPageControl.initSubmitGroup
+			'responsePageInfo': clipPageControl.initSubmitGroup,
+			'saveDocument': saveDocument
 		};
+
+	function saveDocument(info) {
+		console.log('saveDocument');
+		console.log(info);
+	}
 
 	function showPageClipFailure() {
 		var pageClipFailure = Wiz.Message.get('pageClipFailure');

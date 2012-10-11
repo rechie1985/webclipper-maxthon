@@ -153,7 +153,7 @@ function ClipPageControl() {
 	 */
 
 	function requestPageStatus() {
-		Wiz.Browser.sendRequest(Wiz.Constant.ListenType.SERVICE, {name: 'preview', op: 'getInfo'});	
+		Wiz.Browser.sendRequest(Wiz.Constant.ListenType.CONTENT, {name: 'preview', op: 'getInfo'});	
 	}
 
 	//初始化剪辑页面信息
@@ -363,7 +363,7 @@ function ClipPageControl() {
 				userid : userid,
 				isNative : isNative
 			};
-		Wiz.Browser.sendRequest(Wiz.Constant.ListenType.SERVICE, {
+		Wiz.Browser.sendRequest(Wiz.Constant.ListenType.CONTENT, {
 			name: 'preview',
 			op: 'submit',
 			info: info,

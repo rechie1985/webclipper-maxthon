@@ -302,7 +302,7 @@ function Wiz_PageInfo() {
 	}
 
 	//监听popup页面发送来的请求，把当前页面的剪辑信息发送给popup
-	// Wiz.Browser.addListener(Wiz.Constant.ListenType.SERVICE, messageHandler);
+	// Wiz.Browser.addListener('wiz_service', messageHandler);
 	// Public API:
 	// this.readyRequestHandler = readyRequestHandler
 	this.getDefaultArticle = getDefaultArticle;
