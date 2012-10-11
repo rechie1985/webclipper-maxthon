@@ -721,7 +721,7 @@ function Wiz_ContentPreview() {
 	}
 
 
-	Wiz.Browser.addListener(iz.Constant.ListenType.CONTENT, messageHandler);
+	Wiz.Browser.addListener(Wiz.Constant.ListenType.CONTENT, messageHandler);
 
 	// Public API:
 	this.getArticleElement = getArticleElement;

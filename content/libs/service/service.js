@@ -27,21 +27,22 @@ function onConnectListener(port) {
 	case 'requestCategory':
 		break;
 	case 'saveDocument':
-		var detail = Wiz.storage.get('document_detail');
-		console.log(typeof detail);
-		console.log(JSON.parse(detail));
-		if (!info ) {
+		//获取当前页面的剪辑信息
+		var paramsStr = Wiz.storage.get('storage_key');
+		if (!paramsStr ) {
 			return;
 		}
-		if (info.isNative === true) {
+		params = JSON.parse(paramsStr);
+		console.log(params);
+		if (params.isNative === true) {
 			//调用本地客户单保存，不需要进行登陆
-			saveToNative(info);
+			saveToNative(params);
 		} else {
-			if ( !info.title|| !info.params) {
+			if ( !params.title|| !params.params) {
 				return;
 			}
 			//登陆成功后保存
-			saveToServer(info);
+			saveToServer(params);
 			// wizPostDocument(info);
 		}
 		break;
