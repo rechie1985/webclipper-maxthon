@@ -10,9 +10,9 @@ function ClipPageControl() {
 	'use strict';
 	
 	var saveType = localStorage['saveType'],
-		isNative = (saveType && saveType === 'save_to_native') ? true : false,
+		_isNative = (saveType && saveType === 'save_to_native') ? true : false,
 		_hasNative = null,
-		isOpened = false;
+		_isOpened = false;
 
 	function initClipPageListener() {
 		PopupView.hideCreateDiv();
@@ -36,7 +36,7 @@ function ClipPageControl() {
 	}
 
 	function initSaveType() {
-		if (isNative) {
+		if (_isNative) {
 			$('#save_type_sel')[0].options[1].selected = true;
 		}
 	}
@@ -58,9 +58,9 @@ function ClipPageControl() {
 
 	function setSaveType(type) {
 		if (type === 'save_to_native') {
-			isNative = true;
+			_isNative = true;
 		} else if (type === 'save_to_server') {
-			isNative = false;
+			_isNative = false;
 		}
 		localStorage['saveType'] = type;
 	}
@@ -75,10 +75,10 @@ function ClipPageControl() {
 	function showClipPage(params) {
 		console.log('ClipPageControl.showClipPage()');
 		$('#waiting').hide();
-		console.log(isOpened);
-		if (isOpened === false) {
+		console.log(_isOpened);
+		if (_isOpened === false) {
 			initClipPageListener();
-			isOpened = true;
+			_isOpened = true;
 		} else {
 			initClipPageInfo();
 		}
@@ -117,7 +117,7 @@ function ClipPageControl() {
 			}
 			noteSubmit();
 		} else {
-			// port.postMessage(cmd);
+
 			//改变页面显示
 			PopupView.changeSubmitDisplayByType();
 		}
@@ -181,11 +181,6 @@ function ClipPageControl() {
 	}
 
 	function cmdLogout() {
-		Cookie.removeCookies(cookieUrl, cookieName, function () {
-			// chrome.extension.connect({
-			// 	name: 'logout'
-			// });
-		});
 		window.close();
 	}
 
@@ -298,12 +293,7 @@ function ClipPageControl() {
 		}
 
 		var opCmd = getNudgeOp(keycode, evt);
-		var info = {
-			direction: opCmd
-		};
-		// chrome.extension.connect({
-		// 	name: 'onkeydown'
-		// }).postMessage(info);
+		Wiz.Browser.sendRequest(Wiz.Constant.ListenType.CONTENT, {'name': 'preview', 'op': 'keydown',  'opCmd': opCmd});
 	}
 
 	function getNudgeOp(key, evt) {
@@ -348,6 +338,7 @@ function ClipPageControl() {
 
 	function noteSubmit(evt) {
 		requestSubmit();
+		//发送请求后关闭页面
 	}
 
 	function requestSubmit() {
@@ -361,10 +352,9 @@ function ClipPageControl() {
 				category: category,
 				comment: comment,
 				userid : userid,
-				isNative : isNative
+				isNative : _isNative
 			};
 
-		console.log(info);
 		Wiz.Browser.sendRequest(Wiz.Constant.ListenType.CONTENT, {
 			name: 'preview',
 			op: 'submit',

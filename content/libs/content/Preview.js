@@ -629,10 +629,6 @@ function Wiz_ContentPreview() {
 			case "clear":
 				clear();
 				break;
-			case "nudge":
-				console.log("nudged");
-				nudgePreview(request.args.direction);
-				break;
 			case "article":
 				if (wiz_pageInfo.getSelection()) {
 					console.log("preview selection active");

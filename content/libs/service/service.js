@@ -304,7 +304,10 @@ function wizSavePageContextMenuClick(info, tab) {
 }
 
 Wiz.Browser.addListener(Wiz.Constant.ListenType.SERVICE, onConnectListener);
-
+Wiz.maxthon.browser.onBrowserEvent = function (obj) {
+	console.log('Wiz.maxthon.browser.onBrowserEvent Start');
+	console.log(obj);
+}
 //通过监听appEvent来向当前页面和popup发送消息
 Wiz.maxthon.onAppEvent = function (obj) {
 	if (!obj.action) {
