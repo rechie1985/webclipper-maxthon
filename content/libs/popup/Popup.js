@@ -25,8 +25,17 @@ window.onload = function () {
 	}
 
 	function loginSuccessHandler(response) {
-		if (keep_passoword.checked) {
+		if (isLogin === false) {
+			isLogin = true;
 			$('#loginoff_div').hide();
+		}
+		if (!localStorage[Wiz.Constant.AUTH_COOKIE] && keep_passoword.checked) {
+
+			var userId = $('#user_id').val();
+			var password = 'md5.' + hex_md5($('#password').val());
+			if (!userId || !password) {
+				return;
+			}
 			var value = $('#user_id').val() + '*' + 'md5.' + hex_md5($('#password').val());
 			localStorage[Wiz.Constant.AUTH_COOKIE] = value;
 		}

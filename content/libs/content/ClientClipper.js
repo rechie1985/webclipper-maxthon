@@ -402,8 +402,9 @@ var ClientClipper = function () {
 		//所以改为发送请求，并把当前的URL发送到监听端。
 		//监听端收到请求后，从storage中获取数据(成功后是否需要清空？)
 		//然后执行继续的请求
-		Wiz.storage.set('storage_key', JSON.stringify(info));
-		Wiz.Browser.sendRequest(Wiz.Constant.ListenType.SERVICE, {'name': 'saveDocument', 'info': 'storage_key'});
+		var urlKey = encodeURIComponent(document.URL);
+		Wiz.storage.set(urlKey, JSON.stringify(info));
+		Wiz.Browser.sendRequest(Wiz.Constant.ListenType.SERVICE, {'name': 'saveDocument', 'info': urlKey});
 		console.log(info);
 		// setTimeout(function(){
 		// 	chrome.extension.connect({"name" : "saveDocument"}).postMessage(info);

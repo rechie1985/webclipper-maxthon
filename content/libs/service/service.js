@@ -9,7 +9,7 @@ var Wiz_Context = {
 	tab : null,
 	user_id : null,
 	isLogin: false
-}
+};
 
 function onConnectListener(port) {
 	var name = port.name,
@@ -28,7 +28,7 @@ function onConnectListener(port) {
 		break;
 	case 'saveDocument':
 		//获取当前页面的剪辑信息
-		var paramsStr = Wiz.storage.get('storage_key');
+		var paramsStr = Wiz.storage.get(info);
 		if (!paramsStr ) {
 			return;
 		}
@@ -46,21 +46,22 @@ function onConnectListener(port) {
 			// wizPostDocument(info);
 		}
 		break;
-	case 'checkLogin':
-		break;
-	case 'onkeydown':
-		break;
-	case 'requestToken':
-		break;
-	case 'logout':
-		break;
  	}
 }
 
-function loginByCookies(cookie) {
+/**
+ * 通过cookie登陆
+ * @param  {[type]}   cookie   [description]
+ * @param  {Function} callback [登陆成功后回调函数]
+ * @param  {[type]}   params   [callback需要的参数---option]
+ * @return {[type]}            [description]
+ */
+function loginByCookies(cookie, callback, params) {
 	if (!cookie) {
 		return;
 	}
+	console.log(typeof cookie);
+	console.log(cookie);
 	var info = cookie;
 	var split_count = info.indexOf('*md5');
 	var loginParam = {};
@@ -68,31 +69,38 @@ function loginByCookies(cookie) {
 	loginParam.api_version = 3;
 	loginParam.user_id = info.substring(0, split_count);
 	loginParam.password = info.substring(split_count + 1);
-	loginAjax(loginParam);
+	loginAjax(loginParam, callback, params);
 }
 
 /**
  * 登陆方法
  * @param  {[type]}   loginParam [登陆信息]
  * @param  {Function} callback   [登陆成功回调函数]
+ * @param  {Function} params   	 [回调函数参数]
  * @return {[type]}              [description]
  */
-function loginAjax(loginParam, callback) {
+function loginAjax(loginParam, callback, params) {
 	var loginError = function(err) {
 		Wiz.Browser.sendRequest(Wiz.Constant.ListenType.POPUP, {'name': 'loginError', 'params': err});
 	}
 	var loginSuccess = function(responseJSON) {
-		Wiz.Browser.sendRequest(Wiz.Constant.ListenType.POPUP, {'name': 'loginSuccess', 'params': responseJSON, 'hasNative': hasNativeClient()});
-		// 不应该放在login中来处理，应该在popup来发送请求
-		Wiz_Context.token = responseJSON.token;
 
-		if (typeof callback === 'function') {
-			callback();
+		try {
+			Wiz.Browser.sendRequest(Wiz.Constant.ListenType.POPUP, {'name': 'loginSuccess', 'params': responseJSON, 'hasNative': hasNativeClient()});
+			// 不应该放在login中来处理，应该在popup来发送请求
+			Wiz_Context.token = responseJSON.token;
+
+			if (typeof callback === 'function') {
+				callback(params);
+			}
+		} catch (err) {
+			console.log('loginAjax callSuccess Error: ' + err);
 		}
 	}
 	//缓存userid
 	Wiz_Context.user_id = loginParam.user_id;
 	console.log('login');
+	console.log(loginParam);
 	xmlrpc(Wiz_Context.xmlUrl, 'accounts.clientLogin', [loginParam], loginSuccess, loginError);
 }
 
@@ -105,7 +113,11 @@ function requestCategory() {
 	if (categoryStr) {
 		sendCategoryToPopup(categoryStr);
 	} else {
-		requestCategoryAjax();
+		if (Wiz_Context.token) {
+			var authStr = localStorage[Wiz.Constant.AUTH_COOKIE];
+			loginByCookies(authStr, requestCategoryAjax);
+			// requestCategoryAjax();
+		}
 	}
 }
 
@@ -202,7 +214,7 @@ function wizPostDocument(docInfo) {
 						+ '&body=' + encodeURIComponent(body).replace(regexp,  '+') + '&category=' + encodeURIComponent(category).replace(regexp,  '+');
 
 	//发送给当前tab消息，显示剪辑结果					
-	Wiz.Browser.sendRequest(Wiz_Context.tab.id, {name: 'sync', info: docInfo});
+	// Wiz.Browser.sendRequest(Wiz_Context.tab.id, {name: 'sync', info: docInfo});
 	
 	var callbackSuccess = function(response) {
 		var json = JSON.parse(response);
@@ -210,19 +222,19 @@ function wizPostDocument(docInfo) {
 			console.error('sendError : ' + json.return_message);
 			docInfo.errorMsg = json.return_message;
 			
-			Wiz.Browser.sendRequest(Wiz_Context.tab.id, {name: 'error' , info: docInfo});
+			// Wiz.Browser.sendRequest(Wiz_Context.tab.id, {name: 'error' , info: docInfo});
 			return;
 		}
 		console.log('success : saveDocument');
 		
-		Wiz.Browser.sendRequest(Wiz_Context.tab.id, {name: 'saved' , info: docInfo});
+		// Wiz.Browser.sendRequest(Wiz_Context.tab.id, {name: 'saved' , info: docInfo});
 	}
 	
 	var callbackError = function(response) {
 		var errorJSON = JSON.parse(response);
 		docInfo.errorMsg = json.return_message;
 
-		Wiz.Browser.sendRequest(Wiz_Context.tab.id, {name: 'error' , info: docInfo});
+		// Wiz.Browser.sendRequest(Wiz_Context.tab.id, {name: 'error' , info: docInfo});
 
 		console.error('callback error : ' + json.return_message);
 	}
@@ -293,32 +305,12 @@ function saveToNative(info) {
 }
 
 function saveToServer(info) {
-	Cookie.getCookies(Wiz_Context.cookieUrl, Wiz_Context.cookieName, wiz_loginByCookies, true, info);
-}
-
-function wizSaveNativeContextMenuClick(info, tab) {
-	Wiz_Context.tab = tab;
-	var wizClient = this.getNativeClient();
-	Wiz.Browser.sendRequest(tab.id, {
-		name: 'preview',
-		op: 'submit',
-		info : { url: tab.url },
-		type: 'native'
-	});
-}
-
-function wizSavePageContextMenuClick(info, tab) {
-	Wiz_Context.tab = tab;
-	if (isLogin()) {
-		info.title = tab.title;
-		Wiz.Browser.sendRequest(tab.id, {
-			name : 'preview',
-			op : 'submit',
-			info : info,
-			type : 'fullPage'
-		}, sendTabRequestCallbackByContextMenu);
+	var authStr = localStorage[Wiz.Constant.AUTH_COOKIE];
+	if (typeof authStr === 'string') {
+		loginByCookies(authStr, wizPostDocument, info);
 	}
 }
+
 
 Wiz.Browser.addListener(Wiz.Constant.ListenType.SERVICE, onConnectListener);
 // 通过监听appEvent来向当前页面和popup发送消息

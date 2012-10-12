@@ -40,7 +40,7 @@ var xmlrpc = function(server, method, params, callback, callErr, callFinal) {
                     callErr("connection error " + request.status);
                     return;
                 }
-
+                console.log(request);
                 var ret = null;
                 try {
                     if (request.responseXML)
@@ -53,13 +53,13 @@ var xmlrpc = function(server, method, params, callback, callErr, callFinal) {
                     throw err;
                 }
 
-                try {
+                // try {
                     callback(ret);
-                } catch (err) {
-                    err.message = "callback: " + err.message;
-                    callErr(err);
-                    throw err;
-                }
+                // } catch (err) {
+                //     err.message = "callback: " + err.message;
+                //     callErr(err);
+                //     throw err;
+                // }
             } finally {
                 if (callFinal)
                     callFinal();
