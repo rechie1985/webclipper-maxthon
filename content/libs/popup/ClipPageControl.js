@@ -12,7 +12,7 @@ function ClipPageControl() {
 	var saveType = localStorage['saveType'],
 		_isNative = (saveType && saveType === 'save_to_native') ? true : false,
 		_hasNative = null,
-		_isOpened = false;
+		_isOpened = false;							//通过_isOpened来判断是否已经加载过监听事件
 
 	function initClipPageListener() {
 		PopupView.hideCreateDiv();
@@ -227,8 +227,14 @@ function ClipPageControl() {
 	 * @param {Object} categoryStr
 	 */
 
-	function parseWizCategory(categoryStr) {
+	function parseWizCategory(params) {
+		var categoryStr = params.category;
+		if (typeof categoryStr !== 'string') {
+			//TODO 错误
+			return;
+		}
 
+		localStorage['category'] = categoryStr;
 		initZtree();
 		var visible = isCategoryLoading();
 		if (visible) {
@@ -264,16 +270,8 @@ function ClipPageControl() {
 	 */
 
 	function requestCategory() {
-		// $('#category_info').bind('click', changeCategoryLoadingStatus);
-		// var port = chrome.extension.connect({
-		// 	name: 'requestCategory'
-		// });
-		// port.onMessage.addListener(function (msg) {
-		// 	//错误处理
-		// 	var value = $('#wiz_note_category').val();
-		// 	localStorage['category'] = msg;
-		// 	parseWizCategory(msg);
-		// });
+		$('#category_info').bind('click', changeCategoryLoadingStatus);
+		Wiz.Browser.sendRequest(Wiz.Constant.ListenType.SERVICE, {name: 'requestCategory'});
 	}
 
 	function keyDownHandler(evt) {
@@ -390,4 +388,5 @@ function ClipPageControl() {
 
 	this.showClipPage = showClipPage;
 	this.initSubmitGroup = initSubmitGroup;
+	this.parseWizCategory = parseWizCategory;
 }

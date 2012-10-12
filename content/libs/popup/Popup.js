@@ -7,17 +7,13 @@ window.onload = function () {
 		handlers = {
 			'loginError': loginErrorHandler,
 			'loginSuccess': loginSuccessHandler,
-			'contentVeilShow': clipPageControl.showClipPage,
 			'PageClipFailure': showPageClipFailure,
 			'initClipPage': clipPageControl.showClipPage,
 			'responsePageInfo': clipPageControl.initSubmitGroup,
-			'saveDocument': saveDocument
+			'responseCategory': clipPageControl.parseWizCategory
 		};
 
-	function saveDocument(info) {
-		console.log('saveDocument');
-		console.log(info);
-	}
+	var isLogin = false;			//由于遨游3的特殊行，必须加isLogin参数来判断是否已经登陆过
 
 	function showPageClipFailure() {
 		var pageClipFailure = Wiz.Message.get('pageClipFailure');
@@ -31,17 +27,16 @@ window.onload = function () {
 	function loginSuccessHandler(response) {
 		if (keep_passoword.checked) {
 			$('#loginoff_div').hide();
-			var value = $('#user_id').val() + '*' + $('#password').val();
-			localStorage[Wiz.Constant.AUTH_COOKIE] = JSON.stringify({'auth': value, 'date': new Date()});
+			var value = $('#user_id').val() + '*' + 'md5.' + hex_md5($('#password').val());
+			localStorage[Wiz.Constant.AUTH_COOKIE] = value;
 		}
-		clipPageControl.showClipPage(response);
 	}
 
 	function showByCookies(cookies) {
 
 		if (cookies) {
-			//如果cookie有值，则直接显示剪辑页面
-			clipPageControl.showClipPage();
+			//有cookie，则直接显示
+			wizRequestPreview();
 		} else {
 			PopupView.showLogin();
 		}
@@ -49,10 +44,8 @@ window.onload = function () {
 
 
 	function tabLoadedListener() {
-		var a = localStorage[Wiz.Constant.AUTH_COOKIE];
-		
-
-		showByCookies(a.auth);
+		var authStr = localStorage[Wiz.Constant.AUTH_COOKIE];
+		showByCookies(authStr);
 	}
 
 	function wizPopupInitialize() {
@@ -77,4 +70,30 @@ window.onload = function () {
 	// });
 
 	wizPopupInitialize();
+
+	function wizRequestPreview(op) {
+		if (!op) {
+			//默认为文章
+			op = 'article';
+		}
+		try {
+			Wiz.Browser.sendRequest(Wiz.Constant.ListenType.CONTENT, {name : 'preview', op : op});
+			console.log('service wizRequestPreview start');
+		} catch (err) {
+			console.log('service wizRequestPreview start Error: ' + err);
+		}
+	}
+
+	Wiz.maxthon.onAppEvent = function (obj) {
+		if (!obj.action) {
+			return;
+		}
+		console.log(obj);
+		var targetType = obj.action.type,
+			actionType = obj.type;
+		var authStr = localStorage[Wiz.Constant.AUTH_COOKIE];
+		if ('panel' === targetType && 'ACTION_SHOW' === actionType && authStr) {
+			wizRequestPreview();
+		}
+	}
 };

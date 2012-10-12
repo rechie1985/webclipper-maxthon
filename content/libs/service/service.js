@@ -12,7 +12,6 @@ var Wiz_Context = {
 }
 
 function onConnectListener(port) {
-	console.log(port);
 	var name = port.name,
 		info = port.info;
 	if (!name) {
@@ -25,6 +24,7 @@ function onConnectListener(port) {
 	case 'retryClip':
 		break;
 	case 'requestCategory':
+		requestCategory();
 		break;
 	case 'saveDocument':
 		//获取当前页面的剪辑信息
@@ -71,14 +71,24 @@ function loginByCookies(cookie) {
 	loginAjax(loginParam);
 }
 
-function loginAjax(loginParam) {
+/**
+ * 登陆方法
+ * @param  {[type]}   loginParam [登陆信息]
+ * @param  {Function} callback   [登陆成功回调函数]
+ * @return {[type]}              [description]
+ */
+function loginAjax(loginParam, callback) {
 	var loginError = function(err) {
 		Wiz.Browser.sendRequest(Wiz.Constant.ListenType.POPUP, {'name': 'loginError', 'params': err});
 	}
 	var loginSuccess = function(responseJSON) {
 		Wiz.Browser.sendRequest(Wiz.Constant.ListenType.POPUP, {'name': 'loginSuccess', 'params': responseJSON, 'hasNative': hasNativeClient()});
-		wizRequestPreview();
-		Wiz_Context.isLogin = true;
+		// 不应该放在login中来处理，应该在popup来发送请求
+		Wiz_Context.token = responseJSON.token;
+
+		if (typeof callback === 'function') {
+			callback();
+		}
 	}
 	//缓存userid
 	Wiz_Context.user_id = loginParam.user_id;
@@ -86,19 +96,26 @@ function loginAjax(loginParam) {
 	xmlrpc(Wiz_Context.xmlUrl, 'accounts.clientLogin', [loginParam], loginSuccess, loginError);
 }
 
-function requestCategory(port) {
+function requestCategory() {
 	var nativeCategoryStr = getNativeCagetory(Wiz_Context.user_id),
 		localCategoryStr = getLocalCategory(),
 		categoryStr = (nativeCategoryStr) ? (nativeCategoryStr) : (localCategoryStr);
 
-	if (port) {
-		//本地如果为获取到文件夹信息，则获取服务端的文件夹信息
-		if (categoryStr) {
-			port.postMessage(categoryStr);
-		} else {
-			portRequestCategoryAjax(port);
-		}
+	//本地如果为获取到文件夹信息，则获取服务端的文件夹信息
+	if (categoryStr) {
+		sendCategoryToPopup(categoryStr);
+	} else {
+		requestCategoryAjax();
 	}
+}
+
+/**
+ * 发送目录信息给popup页面
+ * @param  {[type]} categoryStr [description]
+ * @return {[type]}             [description]
+ */
+function sendCategoryToPopup(categoryStr) {
+	Wiz.Browser.sendRequest(Wiz.Constant.ListenType.POPUP, {'name': 'responseCategory', 'category': categoryStr});
 }
 
 function getLocalCategory() {
@@ -136,7 +153,7 @@ function getNativeCagetory(userid) {
 	return categoryStr;
 }
 
-function portRequestCategoryAjax(port) {
+function requestCategoryAjax(port) {
 	var params = {
 		client_type : 'web3',
 		api_version : 3,
@@ -144,15 +161,15 @@ function portRequestCategoryAjax(port) {
 	};
 	var callbackSuccess = function(responseJSON) {
 		var categoryStr = responseJSON.categories;
-		setLocalCategory(categoryStr);
-		if (port) {
-			port.postMessage(categoryStr);
+		if (typeof categoryStr !== 'string') {
+			return ;
 		}
+		setLocalCategory(categoryStr);
+		sendCategoryToPopup(categoryStr);
 	}
 	var callbackError = function(response) {
-		if (port) {
-			port.postMessage(false);
-		}
+		//TODO 统一的页面错误显示
+		console.log('requestCategoryAjax() callError: ' + err);
 	}
 	xmlrpc(Wiz_Context.xmlUrl, 'category.getAll', [params], callbackSuccess, callbackError);
 }
@@ -304,19 +321,21 @@ function wizSavePageContextMenuClick(info, tab) {
 }
 
 Wiz.Browser.addListener(Wiz.Constant.ListenType.SERVICE, onConnectListener);
-Wiz.maxthon.browser.onBrowserEvent = function (obj) {
-	console.log('Wiz.maxthon.browser.onBrowserEvent Start');
-	console.log(obj);
-}
-//通过监听appEvent来向当前页面和popup发送消息
+// 通过监听appEvent来向当前页面和popup发送消息
 Wiz.maxthon.onAppEvent = function (obj) {
 	if (!obj.action) {
 		return;
 	}
+	console.log(obj);
+	console.log();
 	var targetType = obj.action.type,
 		actionType = obj.type;
-	if ('panel' === targetType && 'ACTION_SHOW' === actionType && Wiz_Context.isLogin) {
-		wizRequestPreview();
+	var authStr = localStorage[Wiz.Constant.AUTH_COOKIE];
+	if ('panel' === targetType && 'ACTION_SHOW' === actionType && authStr) {
 		Wiz.Browser.sendRequest(Wiz.Constant.ListenType.POPUP, {name: 'initClipPage', hasNative: hasNativeClient()});
+	}
+	//popup页面关闭，发送请求，取消预览
+	if ('panel' === targetType && 'ACTION_STOP' === actionType) {
+		wizRequestPreview('clear');
 	}
 }
