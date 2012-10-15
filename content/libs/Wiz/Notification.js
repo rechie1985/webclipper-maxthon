@@ -53,7 +53,8 @@ Wiz.Notification.prototype.showNotification = function (title, body, isAutoHide)
 			}
 		}
 
-		var notification = this.notifications.createNotification('images/message.jpg', title, body);    
+		var notification = this.notifications.createNotification('images/message.jpg', title, body);
+		notification.tag = 'wiz_notification';
 		if (isAutoHide === true) {
 	    	notification.ondisplay = function() { setTimeout('notification.cancel()', 3000); }    
 	    }

@@ -102,8 +102,16 @@ window.onload = function () {
 		var targetType = obj.action.type,
 			actionType = obj.type;
 		var authStr = localStorage[Wiz.Constant.AUTH_COOKIE];
-		if ('panel' === targetType && 'ACTION_SHOW' === actionType && authStr) {
+		var state = Wiz.WindowManager.getState();
+		console.log('state: ' + state);
+		if ('panel' === targetType && 'ACTION_SHOW' === actionType && authStr && 'active' === state) {
+			//TODO 应该判断当前页面是否已经加载完成，如果未加载完成，需要循环调用（增加超时时间）
 			wizRequestPreview();
 		}
+	}
+	//监听 onBrowserEvent来处理当前页面的信息,主要获取页面是否加载完成，以便显示剪辑信息
+	Wiz.maxthon.browser.onBrowserEvent = function( obj ){
+		console.log('Wiz.maxthon.browser.onBrowserEvent');
+		console.log(obj);
 	}
 };

@@ -368,7 +368,6 @@ function ClipPageControl() {
 			info: info,
 			type: type
 		});
-		Wiz.notification.showClipping(info.title);
 	}
 
 	function initUserLink(token) {
