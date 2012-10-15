@@ -88,6 +88,11 @@ function loginAjax(loginParam, callback, params) {
 			// 不应该放在login中来处理，应该在popup来发送请求
 			Wiz_Context.token = responseJSON.token;
 
+			if (!localStorage['wiz-clip-auth'] && !localStorage[Wiz.Constant.AUTH_COOKIE]) {
+				localStorage['wiz-clip-auth'] = loginParam.user_id;
+				localStorage[Wiz.Constant.AUTH_COOKIE] = loginParam.user_id + '*' + loginParam.password;
+			}
+
 			if (typeof callback === 'function') {
 				callback(params);
 			}
@@ -208,20 +213,22 @@ function wizPostDocument(docInfo) {
 	var requestData = 'title=' + encodeURIComponent(title).replace(regexp,  '+') + '&token_guid=' + encodeURIComponent(Wiz_Context.token).replace(regexp,  '+') 
 						+ '&body=' + encodeURIComponent(body).replace(regexp,  '+') + '&category=' + encodeURIComponent(category).replace(regexp,  '+');
 
-	//发送给当前tab消息，显示剪辑结果					
-	// Wiz.Browser.sendRequest(Wiz_Context.tab.id, {name: 'sync', info: docInfo});
-	
+	//发送给当前tab消息，显示剪辑结果
+	Wiz.notification.showSync(docInfo.title);
+
 	var callbackSuccess = function(response) {
 		var json = JSON.parse(response);
 		if (json.return_code != 200) {
 			console.error('sendError : ' + json.return_message);
 			docInfo.errorMsg = json.return_message;
 			
+			Wiz.notification.showError(docInfo.errorMsg);
 			// Wiz.Browser.sendRequest(Wiz_Context.tab.id, {name: 'error' , info: docInfo});
 			return;
 		}
 		console.log('success : saveDocument');
 		
+		Wiz.notification.showSuccess(docInfo.title);
 		// Wiz.Browser.sendRequest(Wiz_Context.tab.id, {name: 'saved' , info: docInfo});
 	}
 	
@@ -229,6 +236,7 @@ function wizPostDocument(docInfo) {
 		var errorJSON = JSON.parse(response);
 		docInfo.errorMsg = json.return_message;
 
+		Wiz.notification.showError(docInfo.errorMsg);
 		// Wiz.Browser.sendRequest(Wiz_Context.tab.id, {name: 'error' , info: docInfo});
 
 		console.error('callback error : ' + json.return_message);

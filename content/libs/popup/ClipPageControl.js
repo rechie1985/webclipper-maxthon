@@ -185,6 +185,8 @@ function ClipPageControl() {
 
 	function cmdLogout() {
 		localStorage.removeItem(Wiz.Constant.AUTH_COOKIE);
+		localStorage.removeItem('wiz-clip-auth');
+		_isOpened = false;
 		PopupView.showLogin();
 		PopupView.hideLoginDiv();
 	}
@@ -343,6 +345,7 @@ function ClipPageControl() {
 	function noteSubmit(evt) {
 		requestSubmit();
 		//发送请求后关闭页面
+		popupClose();
 	}
 
 	function requestSubmit() {
@@ -365,6 +368,7 @@ function ClipPageControl() {
 			info: info,
 			type: type
 		});
+		Wiz.notification.showClipping(info.title);
 	}
 
 	function initUserLink(token) {
@@ -382,6 +386,10 @@ function ClipPageControl() {
 			}
 		}
 		return hasNativeClient();
+	}
+
+	function popupClose() {
+		Wiz.WindowManager.close();
 	}
 
 	function hasNativeClient() {

@@ -29,17 +29,17 @@ window.onload = function () {
 			isLogin = true;
 			$('#loginoff_div').hide();
 		}
-		if (!localStorage[Wiz.Constant.AUTH_COOKIE]) {
+		// if (!localStorage[Wiz.Constant.AUTH_COOKIE]) {
 
-			var userId = $('#user_id').val();
-			var password = 'md5.' + hex_md5($('#password').val());
-			if (!userId || !password) {
-				return;
-			}
-			var value = userId + '*' + 'md5.' + hex_md5(password);
-			localStorage['wiz-clip-auth'] = userId;
-			localStorage[Wiz.Constant.AUTH_COOKIE] = value;
-		}
+		// 	var userId = $('#user_id').val();
+		// 	var password = 'md5.' + hex_md5($('#password').val());
+		// 	if (!userId || !password) {
+		// 		return;
+		// 	}
+		// 	var value = userId + '*' + 'md5.' + hex_md5(password);
+		// 	localStorage['wiz-clip-auth'] = userId;
+		// 	localStorage[Wiz.Constant.AUTH_COOKIE] = value;
+		// }
 	}
 
 	function showByCookies(cookies) {
