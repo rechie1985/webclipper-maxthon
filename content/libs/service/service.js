@@ -64,9 +64,7 @@ function loginByCookies(cookie, callback, params) {
 	console.log(cookie);
 	var info = cookie;
 	var split_count = info.indexOf('*md5');
-	var loginParam = {};
-	loginParam.client_type = 'web3';
-	loginParam.api_version = 3;
+	var loginParam = Wiz.Constant.LOGIN_PARAMS;
 	loginParam.user_id = info.substring(0, split_count);
 	loginParam.password = info.substring(split_count + 1);
 	loginAjax(loginParam, callback, params);
@@ -166,11 +164,8 @@ function getNativeCagetory(userid) {
 }
 
 function requestCategoryAjax(port) {
-	var params = {
-		client_type : 'web3',
-		api_version : 3,
-		token : Wiz_Context.token
-	};
+	var loginParam = Wiz.Constant.LOGIN_PARAMS;
+	loginParam.token = Wiz_Context.token;
 	var callbackSuccess = function(responseJSON) {
 		var categoryStr = responseJSON.categories;
 		if (typeof categoryStr !== 'string') {
@@ -183,7 +178,7 @@ function requestCategoryAjax(port) {
 		//TODO 统一的页面错误显示
 		console.log('requestCategoryAjax() callError: ' + err);
 	}
-	xmlrpc(Wiz_Context.xmlUrl, 'category.getAll', [params], callbackSuccess, callbackError);
+	xmlrpc(Wiz_Context.xmlUrl, 'category.getAll', [loginParam], callbackSuccess, callbackError);
 }
 
 function bindKeyDownHandler(direction) {

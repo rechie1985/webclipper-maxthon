@@ -9,6 +9,11 @@ Wiz.Constant = {
 		AUTH_COOKIE: 'wiznote_auth'
 	},
 
+	LOGIN_PARAMS: {
+		CLIENT_TYPE: 'webclip_maxthon3',
+		API_VERSION: 3
+	},
+
 	Api : {
 		ACCOUNT_LOGIN: 'accounts.clientLogin',
 		ACCOUNT_KEEPALIVE: 'accounts.keepAlive',

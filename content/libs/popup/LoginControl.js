@@ -22,9 +22,7 @@ function LoginControl() {
 
 		var info = cookie.value;
 		var split_count = info.indexOf('*md5');
-		var loginParam = new Object();
-		loginParam.client_type = 'web3';
-		loginParam.api_version = 3;
+		var loginParam = Wiz.Constant.LOGIN_PARAMS;
 		loginParam.user_id = info.substring(0, split_count);
 		loginParam.password = info.substring(split_count + 1);
 		login(loginParam);
@@ -38,9 +36,7 @@ function LoginControl() {
 		var loginingMsg = Wiz.Message.get('logining');
 		PopupView.showWaiting(loginingMsg);
 
-		var loginParam = new Object();
-		loginParam.client_type = 'web3';
-		loginParam.api_version = 3;
+		var loginParam = Wiz.Constant.LOGIN_PARAMS;
 		loginParam.user_id = user_id.value;
 		loginParam.password = 'md5.' + hex_md5(password.value);
 		login(loginParam);
