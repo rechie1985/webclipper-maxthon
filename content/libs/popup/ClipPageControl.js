@@ -15,7 +15,7 @@ function ClipPageControl() {
 		_isOpened = false;							//通过_isOpened来判断是否已经加载过监听事件
 
 	function initClipPageListener() {
-		PopupView.hideCreateDiv();
+		PopupView.hideWaiting();
 		$('body').bind('keyup', keyDownHandler);
 		$('#submit-type').change(changeSubmitTypehandler);
 		$('#note_submit').click(noteSubmit);
@@ -184,7 +184,9 @@ function ClipPageControl() {
 	}
 
 	function cmdLogout() {
-		window.close();
+		localStorage.removeItem(Wiz.Constant.AUTH_COOKIE);
+		PopupView.showLogin();
+		PopupView.hideLoginDiv();
 	}
 
 	function setTitle(title) {

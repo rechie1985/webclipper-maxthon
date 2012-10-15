@@ -112,11 +112,9 @@ function requestCategory() {
 	if (categoryStr) {
 		sendCategoryToPopup(categoryStr);
 	} else {
-		if (Wiz_Context.token) {
-			var authStr = localStorage[Wiz.Constant.AUTH_COOKIE];
-			loginByCookies(authStr, requestCategoryAjax);
-			// requestCategoryAjax();
-		}
+		var authStr = localStorage[Wiz.Constant.AUTH_COOKIE];
+		loginByCookies(authStr, requestCategoryAjax);
+		// requestCategoryAjax();
 	}
 }
 

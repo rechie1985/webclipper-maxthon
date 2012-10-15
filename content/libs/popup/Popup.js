@@ -29,14 +29,15 @@ window.onload = function () {
 			isLogin = true;
 			$('#loginoff_div').hide();
 		}
-		if (!localStorage[Wiz.Constant.AUTH_COOKIE] && keep_passoword.checked) {
+		if (!localStorage[Wiz.Constant.AUTH_COOKIE]) {
 
 			var userId = $('#user_id').val();
 			var password = 'md5.' + hex_md5($('#password').val());
 			if (!userId || !password) {
 				return;
 			}
-			var value = $('#user_id').val() + '*' + 'md5.' + hex_md5($('#password').val());
+			var value = userId + '*' + 'md5.' + hex_md5(password);
+			localStorage['wiz-clip-auth'] = userId;
 			localStorage[Wiz.Constant.AUTH_COOKIE] = value;
 		}
 	}

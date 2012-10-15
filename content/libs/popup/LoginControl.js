@@ -78,12 +78,5 @@ function LoginControl() {
 		}
 		return true;
 	}
-
-	function initCreateAccountLink() {
-		$('#create_acount').html(Wiz.Message.get('create_account_link')).bind('click', function(evt) {
-			window.open('http://service.wiz.cn/wizkm/a/signup');
-		});
-	}
-	this.initCreateAccountLink = initCreateAccountLink;
 	this.autoLogin = autoLogin;
 }

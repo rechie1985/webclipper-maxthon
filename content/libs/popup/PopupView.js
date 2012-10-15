@@ -25,6 +25,8 @@ var PopupView = {
 		$('#wiz_clip_detail').hide();
 		$('#div_error_validator').html(msg);
 		$('#waiting').hide();
+
+		PopupView.showLogoffDiv();
 	},
 	showWaiting : function (msg) {	
 		$('#waiting').show();
@@ -36,13 +38,29 @@ var PopupView = {
 		$("#waiting").hide();
 		$("#wiz_login").show();
 		$("#wiz_clip_detail").hide();
+
+		PopupView.showLogoffDiv();
 	},
 	hideCategoryTreeAfterSelect : function (display, delay_ms) {
 		$("#category_info").html(display);
 		$("#ztree_container").hide(delay_ms);
 	},
-	hideCreateDiv : function () {
+	hideWaiting : function () {
 		$('#waiting_div').hide();
+	},
+	hideLoginDiv : function () {
+		$('#login_div').hide();
+	},
+	hideLogoffDiv: function () {
+		$('#loginoff_div').hide();
+	},
+	showLogoffDiv: function () {
+		$('#loginoff_div').show();
+	},
+	showCreateAccountDiv: function () {
+		$('#create_acount').html(Wiz.Message.get('create_account_link')).bind('click', function(evt) {
+			window.open('http://service.wiz.cn/wizkm/a/signup');
+		});
 	},
 	initPopupPage : function () {
 		$('#waiting-label').html(Wiz.Message.get('popup_wating'));
@@ -72,5 +90,7 @@ var PopupView = {
 
 		//默认文件夹
 		$('#category_info').html('/' + Wiz.Message.get('MyNotes') + '/').attr('location', '/My Notes/');
+
+		PopupView.showCreateAccountDiv();
 	}
 };
