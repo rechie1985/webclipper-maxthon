@@ -108,6 +108,7 @@ function requestCategory() {
 		categoryStr = (nativeCategoryStr) ? (nativeCategoryStr) : (localCategoryStr);
 
 	//本地如果为获取到文件夹信息，则获取服务端的文件夹信息
+	console.log(categoryStr);
 	if (categoryStr) {
 		sendCategoryToPopup(categoryStr);
 	} else {
@@ -171,6 +172,7 @@ function requestCategoryAjax(port) {
 		if (typeof categoryStr !== 'string') {
 			return ;
 		}
+		console.log('service.requestCategoryAjax Success: ' + categoryStr);
 		setLocalCategory(categoryStr);
 		sendCategoryToPopup(categoryStr);
 	}
@@ -313,13 +315,13 @@ Wiz.maxthon.onAppEvent = function (obj) {
 	if (!obj.action) {
 		return;
 	}
-	console.log(obj);
-	console.log();
 	var targetType = obj.action.type,
-		actionType = obj.type;
+		actionType = obj.type,
+		hasNative = hasNativeClient();
 	var authStr = localStorage[Wiz.Constant.AUTH_COOKIE];
+	console.log(authStr);
 	if ('panel' === targetType && 'ACTION_SHOW' === actionType && authStr) {
-		Wiz.Browser.sendRequest(Wiz.Constant.ListenType.POPUP, {name: 'initClipPage', hasNative: hasNativeClient()});
+		Wiz.Browser.sendRequest(Wiz.Constant.ListenType.POPUP, {name: 'initClipPage', hasNative: hasNative});
 	}
 	//popup页面关闭，发送请求，取消预览
 	if ('panel' === targetType && 'ACTION_STOP' === actionType) {

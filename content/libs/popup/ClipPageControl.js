@@ -20,6 +20,7 @@ function ClipPageControl() {
 		$('#submit-type').change(changeSubmitTypehandler);
 		$('#note_submit').click(noteSubmit);
 		$('#comment-info').bind('focus', resizeCommentHeight);
+		$('#category_info').bind('click', changeCategoryLoadingStatus);
 		$('#wiz_clip_detail').show(initClipPageInfo);
 		initNativeDiv();
 	}
@@ -82,7 +83,9 @@ function ClipPageControl() {
 		} else {
 			initClipPageInfo();
 		}
-		setNativeStatus(params.hasNative);
+		if (params) {
+			setNativeStatus(params.hasNative);
+		}
 	}
 
 	/**
@@ -160,10 +163,10 @@ function ClipPageControl() {
 
 
 	function initClipPageInfo(evt) {
+		initTitle();
 		initLogoutLink();
 		requestPageStatus();
 		initDefaultCategory();
-		initTitle();
 		requestCategory();
 	}
 
@@ -207,9 +210,9 @@ function ClipPageControl() {
 	/**
 	 *加载中
 	 */
-
 	function changeCategoryLoadingStatus() {
 		var visible = isCategoryLoading();
+		console.log('changeCategoryLoadingStatus: ' + visible);
 		if (visible) {
 			PopupView.hideCategoryLoading();
 		} else {
@@ -228,6 +231,8 @@ function ClipPageControl() {
 	 */
 
 	function parseWizCategory(params) {
+		console.log('ClipPageControl.parseWizCategory() Start');
+		console.log(params);
 		var categoryStr = params.category;
 		if (typeof categoryStr !== 'string') {
 			//TODO 错误
@@ -270,7 +275,6 @@ function ClipPageControl() {
 	 */
 
 	function requestCategory() {
-		$('#category_info').bind('click', changeCategoryLoadingStatus);
 		Wiz.Browser.sendRequest(Wiz.Constant.ListenType.SERVICE, {name: 'requestCategory'});
 	}
 
