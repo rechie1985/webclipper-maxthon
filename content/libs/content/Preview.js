@@ -68,13 +68,28 @@ function Wiz_ContentPreview() {
 		}
 
 		// Make sure we're centered in the window.
+		setElementStyle(urlElement,{'position':'fixed', 'top':'50%', 'left':'50%','z-index':'2147483647', 'max-width': '450px', 'overflow': 'hidden', 'text-overflow': 'ellipsis', 'white-space':'nowrap', 'background': 'white', 'padding': '8px', 'border-radius': '4px' });
 		var elStyle = window.getComputedStyle(urlElement, '');
 		var w = parseInt(elStyle.getPropertyValue("width"));
 		var h = parseInt(elStyle.getPropertyValue("height"));
+		console.log('width: ' + w + 'height: ' + h);
 		if (w && h) {
 			urlElement.style.marginLeft = (0 - w / 2) + "px";
 			urlElement.style.marginTop = (0 - h / 2) + "px";
 		}
+	}
+
+
+	function setElementStyle(elem, styles) {
+		if ( !(elem instanceof Element) ) {
+        	return;
+  	  	}
+	    var style = elem.style;
+	    for ( var key in styles ) {
+	        if ( typeof styles[ key ] == "string" ) {
+	            style.setProperty( key, styles[ key ] );
+	        }
+	    }
 	}
 
 	function hideUrlElement() {

@@ -120,7 +120,7 @@ function ClipPageControl() {
 			}
 			noteSubmit();
 		} else {
-
+			Wiz.Browser.sendRequest(Wiz.Constant.ListenType.CONTENT, {'name': 'preview', 'op': cmd});
 			//改变页面显示
 			PopupView.changeSubmitDisplayByType();
 		}
@@ -156,7 +156,7 @@ function ClipPageControl() {
 	 */
 
 	function requestPageStatus() {
-		Wiz.Browser.sendRequest(Wiz.Constant.ListenType.CONTENT, {name: 'preview', op: 'getInfo'});	
+		Wiz.Browser.sendRequest(Wiz.Constant.ListenType.CONTENT, {'name': 'preview', 'op': 'getInfo'});	
 	}
 
 	//初始化剪辑页面信息
@@ -275,7 +275,7 @@ function ClipPageControl() {
 	 */
 
 	function requestCategory() {
-		Wiz.Browser.sendRequest(Wiz.Constant.ListenType.SERVICE, {name: 'requestCategory'});
+		Wiz.Browser.sendRequest(Wiz.Constant.ListenType.SERVICE, {'name': 'requestCategory'});
 	}
 
 	function keyDownHandler(evt) {

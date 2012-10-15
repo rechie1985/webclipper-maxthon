@@ -298,7 +298,7 @@ function Wiz_PageInfo() {
 			title  : document.title
 		};
 		//send to popup page 
-		Wiz.Browser.sendRequest(Wiz.Constant.ListenType.POPUP, {name: 'responsePageInfo', info: response});
+		Wiz.Browser.sendRequest(Wiz.Constant.ListenType.POPUP, {'name': 'responsePageInfo', 'info': response});
 	}
 
 	//监听popup页面发送来的请求，把当前页面的剪辑信息发送给popup
