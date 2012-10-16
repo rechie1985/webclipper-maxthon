@@ -74,8 +74,6 @@ function ClipPageControl() {
 	}
 
 	function showClipPage(params) {
-		console.log('ClipPageControl.showClipPage()');
-		console.log(params);
 		// PopupView.showClipPage();
 		// console.log(_isOpened);
 		// if (_isOpened === false) {
@@ -228,7 +226,7 @@ function ClipPageControl() {
 	 */
 	function changeCategoryLoadingStatus() {
 		var isLoading = isCategoryLoading();
-		console.log('changeCategoryLoadingStatus: ' + isLoading);
+		// console.log('changeCategoryLoadingStatus: ' + isLoading);
 		if (isLoading) {
 			PopupView.hideCategoryLoading();
 		} else {
@@ -247,8 +245,8 @@ function ClipPageControl() {
 	 */
 
 	function parseWizCategory(params) {
-		console.log('ClipPageControl.parseWizCategory() Start');
-		console.log(params);
+		// console.log('ClipPageControl.parseWizCategory() Start');
+		// console.log(params);
 		var categoryStr = params.category;
 		if (typeof categoryStr !== 'string') {
 			//TODO 错误

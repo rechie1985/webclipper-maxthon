@@ -44,8 +44,6 @@ Wiz.Notification.prototype.showSync = function (docTitle) {
 
 Wiz.Notification.prototype.showNotification = function (title, body, isAutoHide) {
 	if (this.checkPermission) {
-		console.log(title);
-		console.log(Wiz.Notification.notificationList);
 		var list = Wiz.Notification.notificationList;
 		if (list && list.length > 0) {
 			for (var index = 0, length = list.length; index < length; index++) {

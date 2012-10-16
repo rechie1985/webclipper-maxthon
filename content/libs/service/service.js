@@ -57,8 +57,8 @@ function loginByCookies(cookie, callback, params) {
 	if (!cookie) {
 		return;
 	}
-	console.log(typeof cookie);
-	console.log(cookie);
+	// console.log(typeof cookie);
+	// console.log(cookie);
 	var info = cookie;
 	var split_count = info.indexOf('*md5');
 	var loginParam = Wiz.Constant.LOGIN_PARAMS;
@@ -86,7 +86,6 @@ function loginAjax(loginParam, callback, params) {
 			Wiz_Context.token = responseJSON.token;
 
 			if (!localStorage['wiz-clip-auth'] && !localStorage[Wiz.Constant.AUTH_COOKIE]) {
-				console.log(hasNativeClient());
 				localStorage['wiz-clip-auth'] = loginParam.user_id;
 				localStorage[Wiz.Constant.AUTH_COOKIE] = loginParam.user_id + '*' + loginParam.password;
 				//手动点击登陆时，需要发送消息到popup页面
@@ -105,7 +104,7 @@ function loginAjax(loginParam, callback, params) {
 	//缓存userid
 	Wiz_Context.user_id = loginParam.user_id;
 	console.log('service do login');
-	console.log(loginParam);
+	// console.log(loginParam);
 	xmlrpc(Wiz.Constant.Default.XMLURL, 'accounts.clientLogin', [loginParam], loginSuccess, loginError);
 }
 
@@ -228,7 +227,7 @@ function wizPostDocument(docInfo) {
 			// Wiz.Browser.sendRequest(Wiz_Context.tab.id, {name: 'error' , info: docInfo});
 			return;
 		}
-		console.log('success : saveDocument');
+		// console.log('success : saveDocument');
 		
 		Wiz.notification.showSuccess(docInfo.title);
 		// Wiz.Browser.sendRequest(Wiz_Context.tab.id, {name: 'saved' , info: docInfo});

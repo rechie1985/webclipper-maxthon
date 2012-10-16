@@ -72,7 +72,6 @@ function Wiz_ContentPreview() {
 		var elStyle = window.getComputedStyle(urlElement, '');
 		var w = parseInt(elStyle.getPropertyValue("width"));
 		var h = parseInt(elStyle.getPropertyValue("height"));
-		console.log('width: ' + w + 'height: ' + h);
 		if (w && h) {
 			urlElement.style.marginLeft = (0 - w / 2) + "px";
 			urlElement.style.marginTop = (0 - h / 2) + "px";
@@ -631,7 +630,6 @@ function Wiz_ContentPreview() {
 
 	// This handles incoming requests from other extension pages.
 	function messageHandler(request) {
-		console.log(document.URL);
 		if (document.URL !== Wiz.maxthon.browser.tabs.getCurrentTab().url) {
 			return ;
 		}
@@ -646,7 +644,7 @@ function Wiz_ContentPreview() {
 				break;
 			case "article":
 				if (wiz_pageInfo.getSelection()) {
-					console.log("preview selection active");
+					// console.log("preview selection active");
 					previewSelection();
 				} else {
 					//if (request.args && request.args.showHelp) {

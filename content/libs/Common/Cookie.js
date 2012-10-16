@@ -1,14 +1,14 @@
 
 var Cookie = window.Cookie || {};
 Cookie.setCookies =  function(name, value, expireSecond) {
-    console.log(name + '--' + value + '--' + expireSecond);
+    // console.log(name + '--' + value + '--' + expireSecond);
     var Days = 30; //此 cookie 将被保存 30 天
     var exp  = new Date();    //new Date("December 31, 9998");
     exp.setTime(exp.getTime() + expireSecond * 1000);
     var cookieValue = name + "="+ window.escape (value) + "; max-age=" + expireSecond * 1000;
-    console.log(cookieValue);
+    // console.log(cookieValue);
     document.cookie = cookieValue;
-    console.log(document.cookie);
+    // console.log(document.cookie);
 };
 Cookie.getCookies = function(name, callback, isAutoDelay, params) {
 

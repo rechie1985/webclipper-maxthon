@@ -119,12 +119,10 @@ window.onload = function () {
 		if (!obj.action) {
 			return;
 		}
-		console.log(obj);
 		var targetType = obj.action.type,
 			actionType = obj.type;
 		var authStr = localStorage[Wiz.Constant.AUTH_COOKIE];
 		var state = Wiz.WindowManager.getState();
-		console.log('state: ' + state);
 		if ('panel' === targetType && 'ACTION_SHOW' === actionType && authStr && 'active' === state) {
 			//TODO 应该判断当前页面是否已经加载完成，如果未加载完成，需要循环调用（增加超时时间）
 			PopupView.showWaiting();

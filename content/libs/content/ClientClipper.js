@@ -405,7 +405,6 @@ var ClientClipper = function () {
 		var urlKey = encodeURIComponent(document.URL);
 		Wiz.storage.set(urlKey, JSON.stringify(info));
 		Wiz.Browser.sendRequest(Wiz.Constant.ListenType.SERVICE, {'name': 'saveDocument', 'info': urlKey});
-		console.log(info);
 		// setTimeout(function(){
 		// 	chrome.extension.connect({"name" : "saveDocument"}).postMessage(info);
 		// }, 300);
