@@ -75,7 +75,7 @@ function ClipPageControl() {
 
 	function showClipPage(params) {
 		console.log('ClipPageControl.showClipPage()');
-		$('#waiting').hide();
+		PopupView.showClipPage();
 		console.log(_isOpened);
 		if (_isOpened === false) {
 			initClipPageListener();
@@ -191,6 +191,8 @@ function ClipPageControl() {
 		_isOpened = false;
 		PopupView.showLogin();
 		PopupView.showLogoffDiv();
+
+		Wiz.Browser.sendRequest(Wiz.Constant.ListenType.CONTENT, {'name': 'preview', 'op': 'clear'});
 	}
 
 	function setTitle(title) {
@@ -217,9 +219,9 @@ function ClipPageControl() {
 	 *加载中
 	 */
 	function changeCategoryLoadingStatus() {
-		var visible = isCategoryLoading();
-		console.log('changeCategoryLoadingStatus: ' + visible);
-		if (visible) {
+		var isLoading = isCategoryLoading();
+		console.log('changeCategoryLoadingStatus: ' + isLoading);
+		if (isLoading) {
 			PopupView.hideCategoryLoading();
 		} else {
 			var categoryLoadingMsg = Wiz.Message.get('category_loading');
@@ -252,6 +254,7 @@ function ClipPageControl() {
 			//用户已经点击展开文件夹树，此时，需要直接显示文件夹树即可
 			PopupView.showCategoryTreeFromLoading(500);
 		}
+		//重新绑定category-info的click事件
 		$('#category_info').unbind('click');
 		$('#category_info').click(switchCategoryTreeVisible);
 	}

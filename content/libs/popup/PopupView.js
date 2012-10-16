@@ -15,6 +15,12 @@ var PopupView = {
 	hideCategoryLoading : function () {
 		$('#category_loading').hide();
 	},
+
+	showClipPage : function () {
+		$('#wiz_clip_detail').show();
+		$('#waiting').hide();
+		$('#wiz_login').hide();
+	},
 	showClipFailure : function (msg) {
 		$('#waiting_div').hide();
 		$('#errorpage_tip label').html(msg);
