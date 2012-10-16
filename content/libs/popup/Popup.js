@@ -30,7 +30,7 @@ window.onload = function () {
 		PopupView.showLoginError(err.params);
 	}
 
-	function loginSuccessHandler(response) {
+	function loginSuccessHandler(params) {
 		PopupView.showLoginDiv();
 		if (!localStorage[Wiz.Constant.AUTH_COOKIE]) {
 
@@ -42,6 +42,11 @@ window.onload = function () {
 			var value = userId + '*' + 'md5.' + hex_md5(password);
 			localStorage['wiz-clip-auth'] = userId;
 			localStorage[Wiz.Constant.AUTH_COOKIE] = value;
+		}
+
+		console.log('loginSuccessHandler(): ' + params.hasNative);
+		if (params.hasNative) {
+			clipPageControl.setNativeStatus(params.hasNative);
 		}
 
 		//剪辑页面是否显示，如果未显示，需要显示

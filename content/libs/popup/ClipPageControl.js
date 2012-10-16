@@ -412,6 +412,7 @@ function ClipPageControl() {
 		_hasNative = hasNative;
 	}
 
+	this.setNativeStatus = setNativeStatus;
 	this.showClipPage = showClipPage;
 	this.initSubmitGroup = initSubmitGroup;
 	this.parseWizCategory = parseWizCategory;
