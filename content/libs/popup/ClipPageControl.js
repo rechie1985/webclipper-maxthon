@@ -75,6 +75,7 @@ function ClipPageControl() {
 
 	function showClipPage(params) {
 		console.log('ClipPageControl.showClipPage()');
+		console.log(params);
 		// PopupView.showClipPage();
 		// console.log(_isOpened);
 		// if (_isOpened === false) {
@@ -196,7 +197,6 @@ function ClipPageControl() {
 		localStorage.removeItem(Wiz.Constant.AUTH_COOKIE);
 		localStorage.removeItem('wiz-clip-auth');
 		localStorage.removeItem(Wiz.Constant.Default.COOKIE_CATEGORY);
-		_isOpened = false;
 		PopupView.showLogin();
 		PopupView.showLogoffDiv();
 

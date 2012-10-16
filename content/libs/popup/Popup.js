@@ -46,8 +46,8 @@ window.onload = function () {
 
 		//剪辑页面是否显示，如果未显示，需要显示
 		//处理手动点击登陆按钮
-		if (isClipPageVisibel()) {
-
+		if (!isClipPageVisibel()) {
+			clipPageControl.requestPageStatus();
 		}
 	}
 
