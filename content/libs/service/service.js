@@ -326,7 +326,7 @@ Wiz.maxthon.onAppEvent = function (obj) {
 		actionType = obj.type,
 		hasNative = hasNativeClient();
 	var authStr = localStorage[Wiz.Constant.AUTH_COOKIE];
-	if ('panel' === targetType && 'ACTION_SHOW' === actionType && authStr) {
+	if ('panel' === targetType && 'ACTION_SHOW' === actionType) {
 		console.log('popup page initialize');
 		Wiz.Browser.sendRequest(Wiz.Constant.ListenType.POPUP, {name: 'initClipPage', hasNative: hasNative});
 	}
