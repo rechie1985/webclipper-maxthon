@@ -88,8 +88,12 @@ function loginAjax(loginParam, callback, params) {
 			if (!localStorage['wiz-clip-auth'] && !localStorage[Wiz.Constant.AUTH_COOKIE]) {
 				localStorage['wiz-clip-auth'] = loginParam.user_id;
 				localStorage[Wiz.Constant.AUTH_COOKIE] = loginParam.user_id + '*' + loginParam.password;
+				//手动点击登陆时，需要发送消息到popup页面
+				Wiz.Browser.sendRequest(Wiz.Constant.ListenType.POPUP, {name: 'initClipPage', hasNative: hasNativeClient()});
+				wizRequestPreview();
 			}
 
+			//执行回调函数
 			if (typeof callback === 'function') {
 				callback(params);
 			}

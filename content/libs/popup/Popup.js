@@ -36,6 +36,18 @@ window.onload = function () {
 			localStorage['wiz-clip-auth'] = userId;
 			localStorage[Wiz.Constant.AUTH_COOKIE] = value;
 		}
+
+		//剪辑页面是否显示，如果未显示，需要显示
+		//处理手动点击登陆按钮
+		if (isClipPageVisibel()) {
+			
+		}
+	}
+
+
+	function isClipPageVisibel() {
+		var visible = $('#wiz_clip_detail').is(':visible');
+		return visible;
 	}
 
 	function showByCookies(cookies) {
@@ -43,6 +55,7 @@ window.onload = function () {
 		if (cookies) {
 			//有cookie，则直接显示
 			wizRequestPreview();
+			clipPageControl.showClipPage();
 		} else {
 			PopupView.showLogin();
 		}
@@ -55,6 +68,7 @@ window.onload = function () {
 	}
 
 	function wizPopupInitialize() {
+		console.log('Popup wizPopupInitialize()');
 		tabLoadedListener();
 	}
 
@@ -70,11 +84,7 @@ window.onload = function () {
 
 	PopupView.initPopupPage();
 	
-	//保证popup页面和preview页面同时关闭
-	// chrome.extension.connect({
-	// 	name : 'popupClosed'
-	// });
-
+	//只有在浏览器打开后，初次点击触发panel事件时，会触发
 	wizPopupInitialize();
 
 	function wizRequestPreview(op) {
