@@ -13,7 +13,6 @@ window.onload = function () {
 			'responseCategory': clipPageControl.parseWizCategory
 		};
 
-	var isLogin = false;			//由于遨游3的特殊行，必须加isLogin参数来判断是否已经登陆过
 
 	function showPageClipFailure() {
 		var pageClipFailure = Wiz.Message.get('pageClipFailure');
@@ -25,21 +24,18 @@ window.onload = function () {
 	}
 
 	function loginSuccessHandler(response) {
-		if (isLogin === false) {
-			isLogin = true;
-			$('#loginoff_div').hide();
-		}
-		// if (!localStorage[Wiz.Constant.AUTH_COOKIE]) {
+		PopupView.showLoginDiv();
+		if (!localStorage[Wiz.Constant.AUTH_COOKIE]) {
 
-		// 	var userId = $('#user_id').val();
-		// 	var password = 'md5.' + hex_md5($('#password').val());
-		// 	if (!userId || !password) {
-		// 		return;
-		// 	}
-		// 	var value = userId + '*' + 'md5.' + hex_md5(password);
-		// 	localStorage['wiz-clip-auth'] = userId;
-		// 	localStorage[Wiz.Constant.AUTH_COOKIE] = value;
-		// }
+			var userId = $('#user_id').val();
+			var password = 'md5.' + hex_md5($('#password').val());
+			if (!userId || !password) {
+				return;
+			}
+			var value = userId + '*' + 'md5.' + hex_md5(password);
+			localStorage['wiz-clip-auth'] = userId;
+			localStorage[Wiz.Constant.AUTH_COOKIE] = value;
+		}
 	}
 
 	function showByCookies(cookies) {

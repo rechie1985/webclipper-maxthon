@@ -6,7 +6,12 @@ Wiz.Constant = {
 		COOKIE_EXPIRE_SEC: 14 * 24 * 60 * 60,
 		TOKEN_EXPIRE_SEC: 3 * 60,
 		REFRESH_TOKEN_TIME_MS: 4 * 60 * 1000,
-		AUTH_COOKIE: 'wiznote_auth'
+		AUTH_COOKIE: 'wiznote_auth',
+		XMLURL : 'http://service.wiz.cn/wizkm/xmlrpc',
+		COOKIEURL : 'http://service.wiz.cn/web',
+		COOKIENAME : 'wiz-clip-auth',
+		COOKIE_CATEGORY: 'wiz-all-category',
+		COOKIE_CATEGORY_TIME: 'wiz-category-stored-time'
 	},
 
 	LOGIN_PARAMS: {

@@ -179,16 +179,18 @@ function ClipPageControl() {
 
 	function initLogoutLink() {
 		var logoutText = Wiz.Message.get('logout');
-		$('#header_user').show();
+		// $('#header_user').show();
 		$('#logout_control').html(logoutText).bind('click', cmdLogout);
 	}
 
 	function cmdLogout() {
+		//注销时，清除所有当前用户相关信息
 		localStorage.removeItem(Wiz.Constant.AUTH_COOKIE);
 		localStorage.removeItem('wiz-clip-auth');
+		localStorage.removeItem(Wiz.Constant.Default.COOKIE_CATEGORY);
 		_isOpened = false;
 		PopupView.showLogin();
-		PopupView.hideLoginDiv();
+		PopupView.showLogoffDiv();
 	}
 
 	function setTitle(title) {

@@ -54,8 +54,13 @@ var PopupView = {
 	hideLogoffDiv: function () {
 		$('#loginoff_div').hide();
 	},
+	showLoginDiv: function () {
+		$('#loginoff_div').hide();
+		$('#login_div').show();
+	},
 	showLogoffDiv: function () {
 		$('#loginoff_div').show();
+		$('#login_div').hide();
 	},
 	showCreateAccountDiv: function () {
 		$('#create_acount').html(Wiz.Message.get('create_account_link')).bind('click', function(evt) {

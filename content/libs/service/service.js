@@ -1,9 +1,6 @@
 var Wiz_Context = {
-	xmlUrl : 'http://service.wiz.cn/wizkm/xmlrpc',
 	cookieUrl : 'http://service.wiz.cn/web',
 	cookieName : 'wiz-clip-auth',
-	cookie_category: 'wiz-all-category',
-	cookie_category_time: 'wiz-category-stored-time',
 	category_expireSec:  10 * 60,
 	token : "",
 	tab : null,
@@ -104,7 +101,7 @@ function loginAjax(loginParam, callback, params) {
 	Wiz_Context.user_id = loginParam.user_id;
 	console.log('login');
 	console.log(loginParam);
-	xmlrpc(Wiz_Context.xmlUrl, 'accounts.clientLogin', [loginParam], loginSuccess, loginError);
+	xmlrpc(Wiz.Constant.Default.XMLURL, 'accounts.clientLogin', [loginParam], loginSuccess, loginError);
 }
 
 function requestCategory() {
@@ -133,8 +130,8 @@ function sendCategoryToPopup(categoryStr) {
 }
 
 function getLocalCategory() {
-	var localCategoryStr = localStorage[Wiz_Context.cookie_category],
-		storedTimeStr = localStorage[Wiz_Context.cookie_category_time],
+	var localCategoryStr = localStorage[Wiz.Constant.Default.COOKIE_CATEGORY],
+		storedTimeStr = localStorage[Wiz.Constant.Default.COOKIE_CATEGORY_TIME],
 		storedTime = Date.parse(storedTimeStr),
 		nowTime = new Date(),
 		isOverTime = ((nowTime - storedTime) / 1000 >= Wiz_Context.category_expireSec);//是否过期
@@ -151,8 +148,8 @@ function getLocalCategory() {
 //如果超出默认的时间，则自动清空，重新获取
 function setLocalCategory(value) {
 	var storedTime = (new Date()).toString();
-	localStorage[Wiz_Context.cookie_category] = value;
-	localStorage[Wiz_Context.cookie_category_time] = storedTime;
+	localStorage[Wiz.Constant.Default.COOKIE_CATEGORY] = value;
+	localStorage[Wiz.Constant.Default.COOKIE_CATEGORY_TIME] = storedTime;
 }
 
 function getNativeCagetory(userid) {
@@ -183,7 +180,7 @@ function requestCategoryAjax(port) {
 		//TODO 统一的页面错误显示
 		console.log('requestCategoryAjax() callError: ' + err);
 	}
-	xmlrpc(Wiz_Context.xmlUrl, 'category.getAll', [loginParam], callbackSuccess, callbackError);
+	xmlrpc(Wiz.Constant.Default.XMLURL, 'category.getAll', [loginParam], callbackSuccess, callbackError);
 }
 
 function bindKeyDownHandler(direction) {
