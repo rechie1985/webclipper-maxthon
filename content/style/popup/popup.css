@@ -245,7 +245,7 @@ body.popup {
 }
 
 .submit-type, .submit-type:hover, .submit-type:active {
-	background-image: url(../../images/button-dropdown.png);
+	background-image: url(./img/button-dropdown.png);
 	background-repeat: no-repeat;
 	background-position: 90% 55%;
 	min-width: 82px;

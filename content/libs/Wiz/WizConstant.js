@@ -1,4 +1,4 @@
-'use strict';
+// 'use strict';
 Wiz.Constant = {
 	Default : {
 		DOC_CATEGORY: '/My Notes/',
@@ -11,7 +11,8 @@ Wiz.Constant = {
 		COOKIEURL : 'http://service.wiz.cn/web',
 		COOKIENAME : 'wiz-clip-auth',
 		COOKIE_CATEGORY: 'wiz-all-category',
-		COOKIE_CATEGORY_TIME: 'wiz-category-stored-time'
+		COOKIE_CATEGORY_TIME: 'wiz-category-stored-time',
+		PREVIEW_OVER_TIME_MS: 5000						//30秒超时
 	},
 
 	LOGIN_PARAMS: {

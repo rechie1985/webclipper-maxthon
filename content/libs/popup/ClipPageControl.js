@@ -7,7 +7,7 @@ var cookieUrl = 'http://service.wiz.cn/web',
 	updateClientUrl = 'http://www.wiz.cn/wiznote_web_clipper_chrome';
 
 function ClipPageControl() {
-	'use strict';
+	// 'use strict';
 	
 	var saveType = localStorage['saveType'],
 		_isNative = (saveType && saveType === 'save_to_native') ? true : false,
@@ -75,14 +75,14 @@ function ClipPageControl() {
 
 	function showClipPage(params) {
 		console.log('ClipPageControl.showClipPage()');
-		PopupView.showClipPage();
-		console.log(_isOpened);
-		if (_isOpened === false) {
-			initClipPageListener();
-			_isOpened = true;
-		} else {
-			initClipPageInfo();
-		}
+		// PopupView.showClipPage();
+		// console.log(_isOpened);
+		// if (_isOpened === false) {
+		// 	initClipPageListener();
+		// 	_isOpened = true;
+		// } else {
+		// 	initClipPageInfo();
+		// }
 		if (params) {
 			setNativeStatus(params.hasNative);
 		}
@@ -138,6 +138,15 @@ function ClipPageControl() {
 			$('#submit-type')[0].options[2].selected = true;
 		}
 
+
+		PopupView.showClipPage();
+		if (_isOpened === false) {
+			initClipPageListener();
+			_isOpened = true;
+		} else {
+			initClipPageInfo();
+		}
+
 		//用户没有选择时，禁止选择该'保存选择'
 		if (clipSelection == false) {
 			$('#submit-type option[id="selection"]').attr('disabled', '');
@@ -165,7 +174,6 @@ function ClipPageControl() {
 	function initClipPageInfo(evt) {
 		initTitle();
 		initLogoutLink();
-		requestPageStatus();
 		initDefaultCategory();
 		requestCategory();
 	}
@@ -407,4 +415,5 @@ function ClipPageControl() {
 	this.showClipPage = showClipPage;
 	this.initSubmitGroup = initSubmitGroup;
 	this.parseWizCategory = parseWizCategory;
+	this.requestPageStatus = requestPageStatus;
 }

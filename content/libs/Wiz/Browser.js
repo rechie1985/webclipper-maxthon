@@ -1,4 +1,4 @@
-'use strict';
+// 'use strict';
 Wiz.Browser = {
 	sendRequest : function(type, param) {
 		try {

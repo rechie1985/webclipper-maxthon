@@ -1,5 +1,5 @@
 if (typeof Wiz === 'undefined') {
-	'use strict';
+	// 'use strict';
 	var Wiz = {
 		_maxthon : null,
 		_storage : null,

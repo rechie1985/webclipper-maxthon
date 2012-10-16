@@ -1,4 +1,4 @@
-'use strict';
+// 'use strict';
 Wiz.Maxthon = function () {
 	var that = window.external.mxGetRuntime();
 	that.browser = getApiObj(Wiz.Maxthon.BROWSER);

@@ -126,7 +126,6 @@ var specialLocation = {
  * 对特殊的文件夹处理，返回相应的显示名
  */
 function changeSpecilaLoction(location) {
-	'use strict' ;
 	$.each(specialLocation, function (key, value) {
 		var index = location.indexOf(key);
 

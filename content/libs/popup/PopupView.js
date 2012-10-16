@@ -1,4 +1,4 @@
-'use strict';
+// 'use strict';
 var PopupView = {
 	changeSubmitDisplayByType : function () {
 		var type = $('#submit-type').val();
@@ -35,6 +35,9 @@ var PopupView = {
 		PopupView.showLogoffDiv();
 	},
 	showWaiting : function (msg) {	
+		if (!msg) {
+			msg = Wiz.Message.get('popup_wating');
+		}
 		$('#waiting').show();
 		$('#waiting-label').html(msg);
 		$('#wiz_login').hide();
@@ -52,7 +55,7 @@ var PopupView = {
 		$("#ztree_container").hide(delay_ms);
 	},
 	hideWaiting : function () {
-		$('#waiting_div').hide();
+		$('#waiting').hide();
 	},
 	hideLoginDiv : function () {
 		$('#login_div').hide();
