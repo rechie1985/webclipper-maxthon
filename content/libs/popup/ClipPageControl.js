@@ -192,7 +192,7 @@ function ClipPageControl() {
 
 	function cmdLogout() {
 		//注销时，清除所有当前用户相关信息
-		localStorage.removeItem(Wiz.Constant.AUTH_COOKIE);
+		localStorage.removeItem(Wiz.Constant.Default.AUTH_COOKIE);
 		localStorage.removeItem('wiz-clip-auth');
 		localStorage.removeItem(Wiz.Constant.Default.COOKIE_CATEGORY);
 		PopupView.showLogin();

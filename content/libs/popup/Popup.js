@@ -32,7 +32,7 @@ window.onload = function () {
 
 	function loginSuccessHandler(params) {
 		PopupView.showLoginDiv();
-		if (!localStorage[Wiz.Constant.AUTH_COOKIE]) {
+		if (!localStorage[Wiz.Constant.Default.AUTH_COOKIE]) {
 
 			var userId = $('#user_id').val();
 			var password = 'md5.' + hex_md5($('#password').val());
@@ -41,7 +41,7 @@ window.onload = function () {
 			}
 			var value = userId + '*' + 'md5.' + hex_md5(password);
 			localStorage['wiz-clip-auth'] = userId;
-			localStorage[Wiz.Constant.AUTH_COOKIE] = value;
+			localStorage[Wiz.Constant.Default.AUTH_COOKIE] = value;
 		}
 
 		console.log('loginSuccessHandler(): ' + params.hasNative);
@@ -75,7 +75,7 @@ window.onload = function () {
 
 
 	function tabLoadedListener() {
-		var authStr = localStorage[Wiz.Constant.AUTH_COOKIE];
+		var authStr = localStorage[Wiz.Constant.Default.AUTH_COOKIE];
 		showByCookies(authStr);
 	}
 
@@ -121,7 +121,7 @@ window.onload = function () {
 		}
 		var targetType = obj.action.type,
 			actionType = obj.type;
-		var authStr = localStorage[Wiz.Constant.AUTH_COOKIE];
+		var authStr = localStorage[Wiz.Constant.Default.AUTH_COOKIE];
 		var state = Wiz.WindowManager.getState();
 		if ('panel' === targetType && 'ACTION_SHOW' === actionType && authStr && 'active' === state) {
 			//TODO 应该判断当前页面是否已经加载完成，如果未加载完成，需要循环调用（增加超时时间）

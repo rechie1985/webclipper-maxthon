@@ -86,8 +86,8 @@ function loginAjax(loginParam, callback, params) {
 			Wiz_Context.token = responseJSON.token;
 
 			localStorage['wiz-clip-auth'] = loginParam.user_id;
-			localStorage[Wiz.Constant.AUTH_COOKIE] = loginParam.user_id + '*' + loginParam.password;
-			if (!localStorage['wiz-clip-auth'] && !localStorage[Wiz.Constant.AUTH_COOKIE]) {
+			localStorage[Wiz.Constant.Default.AUTH_COOKIE] = loginParam.user_id + '*' + loginParam.password;
+			if (!localStorage['wiz-clip-auth'] && !localStorage[Wiz.Constant.Default.AUTH_COOKIE]) {
 				//手动点击登陆时，需要发送消息到popup页面
 				Wiz.Browser.sendRequest(Wiz.Constant.ListenType.POPUP, {name: 'initClipPage', hasNative: hasNativeClient()});
 				wizRequestPreview();
@@ -118,7 +118,7 @@ function requestCategory() {
 	if (categoryStr) {
 		sendCategoryToPopup(categoryStr);
 	} else {
-		var authStr = localStorage[Wiz.Constant.AUTH_COOKIE];
+		var authStr = localStorage[Wiz.Constant.Default.AUTH_COOKIE];
 		loginByCookies(authStr, requestCategoryAjax);
 		// requestCategoryAjax();
 	}
@@ -309,7 +309,7 @@ function saveToNative(info) {
 }
 
 function saveToServer(info) {
-	var authStr = localStorage[Wiz.Constant.AUTH_COOKIE];
+	var authStr = localStorage[Wiz.Constant.Default.AUTH_COOKIE];
 	if (typeof authStr === 'string') {
 		loginByCookies(authStr, wizPostDocument, info);
 	}
@@ -325,7 +325,6 @@ Wiz.maxthon.onAppEvent = function (obj) {
 	var targetType = obj.action.type,
 		actionType = obj.type,
 		hasNative = hasNativeClient();
-	var authStr = localStorage[Wiz.Constant.AUTH_COOKIE];
 	if ('panel' === targetType && 'ACTION_SHOW' === actionType) {
 		console.log('popup page initialize');
 		Wiz.Browser.sendRequest(Wiz.Constant.ListenType.POPUP, {name: 'initClipPage', hasNative: hasNative});
