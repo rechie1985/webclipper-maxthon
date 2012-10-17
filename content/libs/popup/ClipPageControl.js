@@ -374,6 +374,7 @@ function ClipPageControl() {
 				isNative : _isNative
 			};
 
+		console.log(info);
 		Wiz.Browser.sendRequest(Wiz.Constant.ListenType.CONTENT, {
 			name: 'preview',
 			op: 'submit',
