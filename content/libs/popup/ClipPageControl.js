@@ -195,6 +195,7 @@ function ClipPageControl() {
 		localStorage.removeItem(Wiz.Constant.Default.AUTH_COOKIE);
 		localStorage.removeItem('wiz-clip-auth');
 		localStorage.removeItem(Wiz.Constant.Default.COOKIE_CATEGORY);
+		localStorage.removeItem['last-category'];
 		PopupView.showLogin();
 		PopupView.showLogoffDiv();
 
