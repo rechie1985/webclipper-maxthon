@@ -85,9 +85,9 @@ function loginAjax(loginParam, callback, params) {
 			// 不应该放在login中来处理，应该在popup来发送请求
 			Wiz_Context.token = responseJSON.token;
 
+			localStorage['wiz-clip-auth'] = loginParam.user_id;
+			localStorage[Wiz.Constant.AUTH_COOKIE] = loginParam.user_id + '*' + loginParam.password;
 			if (!localStorage['wiz-clip-auth'] && !localStorage[Wiz.Constant.AUTH_COOKIE]) {
-				localStorage['wiz-clip-auth'] = loginParam.user_id;
-				localStorage[Wiz.Constant.AUTH_COOKIE] = loginParam.user_id + '*' + loginParam.password;
 				//手动点击登陆时，需要发送消息到popup页面
 				Wiz.Browser.sendRequest(Wiz.Constant.ListenType.POPUP, {name: 'initClipPage', hasNative: hasNativeClient()});
 				wizRequestPreview();
@@ -130,7 +130,7 @@ function requestCategory() {
  * @return {[type]}             [description]
  */
 function sendCategoryToPopup(categoryStr) {
-	Wiz.Browser.sendRequest(Wiz.Constant.ListenType.POPUP, {'name': 'responseCategory', 'category': categoryStr});
+	Wiz.Browser.sendRequest(Wiz.Constant.ListenType.POPUP, {'name': 'responseCategory', 'category': categoryStr, 'token': Wiz_Context.token});
 }
 
 function getLocalCategory() {
