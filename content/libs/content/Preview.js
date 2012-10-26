@@ -10,27 +10,27 @@ function Wiz_ContentPreview() {
 		var legend = document.createElement("div");
 		legend.id = "wizPreviewLegend";
 
-		var nudgeImgs = [
-		// Image name                 Message identifier
-		["nudge-icon-arrow-up.png", "contentPreview_expandSelection"], ["nudge-icon-arrow-down.png", "contentPreview_shrinkSelection"], ["nudge-icon-arrow-lr.png", "contentPreview_moveSelection"], ["nudge-icon-return.png", "contentPreview_clipArticle"]];
+		// var nudgeImgs = [
+		// // Image name                 Message identifier
+		// ["nudge-icon-arrow-up.png", "contentPreview_expandSelection"], ["nudge-icon-arrow-down.png", "contentPreview_shrinkSelection"], ["nudge-icon-arrow-lr.png", "contentPreview_moveSelection"], ["nudge-icon-return.png", "contentPreview_clipArticle"]];
 
-		var ul = document.createElement("UL");
+		// var ul = document.createElement("UL");
 
-		var i;
-		for (var i = 0; i < nudgeImgs.length; i++) {
-			// @TODO: The div in this block seems totally unnessecary, we could refactor the CSS to get rid of it.
-			var li = document.createElement("li");
-			var div = document.createElement("div");
-			var img = document.createElement("img");
-			var message = document.createTextNode(" " + Wiz.Message.get(nudgeImgs[i][1]));
-			div.className = "keyIcon";
-			// img.src = chrome.extension.getURL("images/nudge-icons/" + nudgeImgs[i][0]);
-			div.appendChild(img);
-			li.appendChild(div);
-			li.appendChild(message);
-			ul.appendChild(li);
-		}
-		legend.appendChild(ul);
+		// var i;
+		// for (var i = 0; i < nudgeImgs.length; i++) {
+		// 	// @TODO: The div in this block seems totally unnessecary, we could refactor the CSS to get rid of it.
+		// 	var li = document.createElement("li");
+		// 	var div = document.createElement("div");
+		// 	var img = document.createElement("img");
+		// 	var message = document.createTextNode(" " + Wiz.Message.get(nudgeImgs[i][1]));
+		// 	div.className = "keyIcon";
+		// 	// img.src = chrome.extension.getURL("images/nudge-icons/" + nudgeImgs[i][0]);
+		// 	div.appendChild(img);
+		// 	li.appendChild(div);
+		// 	li.appendChild(message);
+		// 	ul.appendChild(li);
+		// }
+		// legend.appendChild(ul);
 		return legend;
 	}
 
@@ -648,7 +648,7 @@ function Wiz_ContentPreview() {
 					previewSelection();
 				} else {
 					//if (request.args && request.args.showHelp) {
-					previewArticle(true);
+					previewArticle(false);
 				}
 				break;
 			case "fullPage":
